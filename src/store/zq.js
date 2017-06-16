@@ -34,42 +34,45 @@ const actionsInfo = mapActions({
             stid: baseinfo.stageid,
             fid: baseinfo.fid,
             matchgroup: baseinfo.matchgroup,
-            leagueid: baseinfo.league_id
+            leagueid: -1,
+            hoa: 0,
+            limit: 6
         })
         return baseinfo
     },
+    async getSituation ({commit},fid) {
+        const situation = await ajax.get(`/score/zq/events_statistics?fid=${fid}&T=${Date.now()}`)
+        situation.eventlist.reverse()
+        commit(mTypes.setSituation, situation)
+        return situation
+    },
     async getLeaguerank ({commit}, {homeid, awayid, matchdate, stid, fid}) {
-        const leaguerank = await ajax.get(`/score/zq/leaguerank?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&stid=${stid}&fid=${fid}`)
+        const leaguerank = await ajax.get(`/score/zq/leaguerank?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&stid=${stid}&fid=${fid}&T=${Date.now()}`)
         commit(mTypes.setLeaguerank, leaguerank)
         return leaguerank
     },
-    async getSituation ({commit},fid) {
-        const situation = await ajax.get(`/score/zq/events_statistics?fid=${fid}`)
-        commit(mTypes.setLeaguerank, situation)
-        return situation
-    },
     async getCupRank ({commit}, {matchgroup, matchdate, stid}) {
-        const cuprank = await ajax.get(`/score/zq/cuprank?matchgroup=${matchgroup}&matchdate=${matchdate}&stid=${stid}`)
+        const cuprank = await ajax.get(`/score/zq/cuprank?matchgroup=${matchgroup}&matchdate=${matchdate}&stid=${stid}&T=${Date.now()}`)
         commit(mTypes.setCuprank, cuprank)
         return cuprank
     },
     async getFifarank ({commit}, {homeid, awayid}) {
-        const fifarank = await ajax.get(`/score/zq/fifarank?homeid=${homeid}&awayid=${awayid}`)
+        const fifarank = await ajax.get(`/score/zq/fifarank?homeid=${homeid}&awayid=${awayid}&T=${Date.now()}`)
         commit(mTypes.setFifarank, fifarank)
         return fifarank
     },
     async getJzData ({commit}, {homeid, awayid, matchdate, leagueid, limit, hoa}) {
-        const jz_data = await ajax.get(`/score/zq/jz_data?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&limit=${limit}&hoa=${hoa}`)
+        const jz_data = await ajax.get(`/score/zq/jz_data?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
         commit(mTypes.setJzdata, jz_data)
         return jz_data
     },
     async getRecentRecord ({commit}, {homeid, awayid, matchdate, leagueid, stid, limit, hoa}) {
-        const recent_rank = await ajax.get(`/score/zq/recent_record?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&stid=${stid}&limit=${limit}&hoa=${hoa}`)
+        const recent_rank = await ajax.get(`/score/zq/recent_record?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&stid=${stid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
         commit(mTypes.setRecentRecord, recent_rank)
         return recent_rank
     },
     async getFutureMatch ({commit}, {homeid, awayid, matchdate, fid}) {
-        const future_match = await ajax.get(`/score/zq/future_match?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&fid=${fid}`)
+        const future_match = await ajax.get(`/score/zq/future_match?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&fid=${fid}&T=${Date.now()}`)
         commit(mTypes.setFutureMatch, future_match)
         return future_match
     },
@@ -79,10 +82,10 @@ const actionsInfo = mapActions({
         dispatch(aTypes.getSituation, fid)
         dispatch(aTypes.getLeaguerank, state.params)
         dispatch(aTypes.getCupRank, state.params)
-        dispatch(aTypes.getFifarank, state.params)
+        // dispatch(aTypes.getFifarank, state.params)
         dispatch(aTypes.getJzData, state.params)
         dispatch(aTypes.getRecentRecord, state.params)
-        dispatch(aTypes.getFutureMatch, state.params)
+        // dispatch(aTypes.getFutureMatch, state.params)
     }
 
 }, ns)
