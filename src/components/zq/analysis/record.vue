@@ -1,6 +1,6 @@
 <template>
     <div>
-        <score-rank></score-rank>
+        <!-- <score-rank></score-rank> -->
         <jz-data></jz-data>
         <!-- <recent-record></recent-record>
         <future-match></future-match> -->

@@ -1,8 +1,6 @@
 <template>
     <div class="zhedie-box" v-if="matchesObj">
-    	<div class="zj-nav">
-    		<span class="saixuan" onclick="_hmt.push([&quot;_trackEvent&quot;,&quot;zq_detail&quot;,&quot;click&quot;,&quot;analysis_zj_ls&quot;])">筛选</span> 历史交战
-    	</div>
+        <slot name='header'></slot>
     	<div class="zhedie">
     		<div class="zd-detail">
     			<div class="gaik clear">

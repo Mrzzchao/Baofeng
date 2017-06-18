@@ -21,6 +21,24 @@ const state = {
         matchgroup: null,
         hoa: 0,
         limit: 6
+    },
+    filter: {  // 赛事过滤
+        jz_data: {
+            data: null,
+            status: {          // 选择结果状态，0-左,1-右
+                league: 0,
+                hoa: 0,
+                count: 0
+            }
+        },
+        recent_record: {
+            data: null,
+            status: {          // 选择结果状态，0-左,1-右
+                league: 0,
+                hoa: 0,
+                count: 0
+            }
+        }
     }
 }
 const actionsInfo = mapActions({
@@ -86,8 +104,31 @@ const actionsInfo = mapActions({
         dispatch(aTypes.getJzData, state.params)
         dispatch(aTypes.getRecentRecord, state.params)
         // dispatch(aTypes.getFutureMatch, state.params)
-    }
+    },
 
+    async getFilterData({dispatch, state}, {type, dispatchType}) {
+        let key = ''
+        for (var str in state.filter[type].status) {
+            if (object.hasOwnProperty(str)) {
+                key += str
+            }
+        }
+
+        if(state.filter[type].data[key]) return
+        dispatch(aTypes.setParams, type)
+        dispatch(aTypes[dispatchType], state.params)
+    },
+    setStatus({commit}, type, status) {
+        commit(mTypes.setStatus, type, status)
+    },
+    setBoxShow({commit}, statu) {
+        commit(mTypes.setBoxShow, statu)
+    },
+    setParams(type) {
+        if(state.filter[type].status.league === '1') {
+            state.league
+        }
+    }
 }, ns)
 
 const mutationsInfo = mapMutations({
@@ -117,6 +158,9 @@ const mutationsInfo = mapMutations({
     },
     setParams (state, params) {
         state.params = params
+    },
+    setStatus (state, {type, status}) {
+        state.filter[type].status = status
     }
 }, ns)
 
