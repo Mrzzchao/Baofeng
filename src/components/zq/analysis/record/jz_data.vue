@@ -14,7 +14,7 @@ import fightBox from '~components/zq/common/fight_box.vue'
 import filterBox from '~components/zq/common/filter_box.vue'
 
 export default {
-    data() {
+    data () {
         return {
             boxShow: false
         }
@@ -24,7 +24,7 @@ export default {
         filterBox
     },
     computed: {
-        jz_data() {
+        jz_data () {
             return this.$store.state.zqInfo.jz_data
         }
     },

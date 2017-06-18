@@ -94,21 +94,21 @@
 
 <script>
 export default {
-    data() {
+    data () {
         return {
             tab: 'all'
         }
     },
     computed: {
-        leaguerank() {
+        leaguerank () {
             return this.$store.state.zqInfo.leaguerank
         },
-        baseinfo() {
+        baseinfo () {
             return this.$store.state.zqInfo.baseinfo
         }
     },
     methods: {
-        onTab(tab) {
+        onTab (tab) {
             this.tab = tab
         }
     },

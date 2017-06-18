@@ -58,7 +58,7 @@ const actionsInfo = mapActions({
         })
         return baseinfo
     },
-    async getSituation ({commit},fid) {
+    async getSituation ({commit}, fid) {
         const situation = await ajax.get(`/score/zq/events_statistics?fid=${fid}&T=${Date.now()}`)
         situation.eventlist.reverse()
         commit(mTypes.setSituation, situation)
@@ -95,7 +95,7 @@ const actionsInfo = mapActions({
         return future_match
     },
 
-    async getAllData({dispatch, state}, fid) {
+    async getAllData ({dispatch, state}, fid) {
         await dispatch(aTypes.getBaseInfo, fid)
         dispatch(aTypes.getSituation, fid)
         dispatch(aTypes.getLeaguerank, state.params)
@@ -106,7 +106,7 @@ const actionsInfo = mapActions({
         // dispatch(aTypes.getFutureMatch, state.params)
     },
 
-    async getFilterData({dispatch, state}, {type, dispatchType}) {
+    async getFilterData ({dispatch, state}, {type, dispatchType}) {
         let key = ''
         for (var str in state.filter[type].status) {
             if (object.hasOwnProperty(str)) {
@@ -114,18 +114,18 @@ const actionsInfo = mapActions({
             }
         }
 
-        if(state.filter[type].data[key]) return
+        if (state.filter[type].data[key]) return
         dispatch(aTypes.setParams, type)
         dispatch(aTypes[dispatchType], state.params)
     },
-    setStatus({commit}, type, status) {
+    setStatus ({commit}, type, status) {
         commit(mTypes.setStatus, type, status)
     },
-    setBoxShow({commit}, statu) {
+    setBoxShow ({commit}, statu) {
         commit(mTypes.setBoxShow, statu)
     },
-    setParams(type) {
-        if(state.filter[type].status.league === '1') {
+    setParams (type) {
+        if (state.filter[type].status.league === '1') {
             state.league
         }
     }

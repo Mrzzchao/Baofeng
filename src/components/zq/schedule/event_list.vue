@@ -39,36 +39,36 @@
 <script>
 import {EventType} from '~common/constants'
 export default {
-    data() {
+    data () {
         return {
             EventType: EventType
         }
     },
     computed: {
-        events() {
+        events () {
             return this.$store.state.zqInfo.situation && this.$store.state.zqInfo.situation.eventlist
         },
-        eventTypeMap() {
+        eventTypeMap () {
             let obj = {}
             Object.keys(EventType).forEach((key) => {
-                obj[EventType[key].id] = EventType[key];
+                obj[EventType[key].id] = EventType[key]
             })
 
-            return obj;
+            return obj
         }
     },
     methods: {
-        makeEventTypeClass(event) {
-            let str = '';
+        makeEventTypeClass (event) {
+            let str = ''
             this.onLeft = event.is_team || false
             str = event.is_team ? 'shikuang-lineLeft' : 'shikuang-lineRight'
             str += event.eventtype === EventType.HUAN_REN.id ? ' jh-box' : ''
-            return str;
+            return str
         }
     },
     filters: {
-        truncate(input, length, tail) {
-            if(input.length <= length) {
+        truncate (input, length, tail) {
+            if (input.length <= length) {
                 return input
             }
             return input.slice(0, length) + (tail || '...')

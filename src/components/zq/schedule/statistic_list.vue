@@ -270,25 +270,24 @@
 <script>
 export default {
     computed: {
-        statistics() {
+        statistics () {
             return this.$store.state.zqInfo.situation && this.$store.state.zqInfo.situation.statistic
         }
     },
     methods: {
-        makeWidthStyle(key, isReverse) {
+        makeWidthStyle (key, isReverse) {
             let home = parseInt(this.statistics['h_' + key])
             let away = parseInt(this.statistics['a_' + key])
             let result = (home / (home + away)) * 100
-            if(isReverse) {
+            if (isReverse) {
                 return `width: ${100 - result}%`
             }
             return `width: ${result}%`
         },
-        makeColorClass(key, isReverse, class_l = 'green-bg', class_s = 'gray-bg') {
+        makeColorClass (key, isReverse, class_l = 'green-bg', class_s = 'gray-bg') {
             let home = this.statistics['h_' + key]
             let away = this.statistics['a_' + key]
-            if(isReverse)
-                return home < away ? class_l : class_s
+            if (isReverse) { return home < away ? class_l : class_s }
             return home > away ? class_l : class_s
         }
     }

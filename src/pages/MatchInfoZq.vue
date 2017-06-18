@@ -13,8 +13,8 @@ export default {
         schedule,
         analysis
     },
-    mounted() {
-        this.$store.dispatch(aTypes.getAllData, this.$route.params.fid);
+    mounted () {
+        this.$store.dispatch(aTypes.getAllData, this.$route.params.fid)
     }
 }
 </script>

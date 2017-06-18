@@ -69,7 +69,7 @@
 
 <script>
 export default {
-    data() {
+    data () {
         return {
             key: 1,
             tabs: [
@@ -85,38 +85,38 @@ export default {
         }
     },
     computed: {
-        baseinfo() {
+        baseinfo () {
             return this.$store.state.zqInfo.baseinfo
         }
     },
     methods: {
-        switchResult() {
+        switchResult () {
             this.key = ((this.key + 1) % 4) || 1
         },
-        makeResultClass(match) {
+        makeResultClass (match) {
             let result = match['result' + this.key]
             switch (result) {
-                case '胜':
-                case '大':
-                case '赢': return 'red-k'
+            case '胜':
+            case '大':
+            case '赢': return 'red-k'
 
-                case '平':
-                case '走': return 'green-k'
+            case '平':
+            case '走': return 'green-k'
 
-                case '负':
-                case '小':
-                case '输': return 'blue-k'
+            case '负':
+            case '小':
+            case '输': return 'blue-k'
 
-                default: return 'gray-k'
+            default: return 'gray-k'
             }
         },
-        makeTeamClass(match, name) {
+        makeTeamClass (match, name) {
             let result = match.result1
             let key = 0
             switch (result) {
-                case '胜': key = 0; break;
-                case '平': key = 1; break;
-                case '负': key = 2; break;
+            case '胜': key = 0; break
+            case '平': key = 1; break
+            case '负': key = 2; break
             }
             return name === this.baseinfo.homesxname ? this.teamClassMap[key] : ''
         }
@@ -128,13 +128,13 @@ export default {
         }
     },
     filters: {
-        avgResultFmt(input) {
+        avgResultFmt (input) {
             return `场均净胜${input.avar_gd}球，场均总进${input.win_count}球， 大球${input.big_ball}次，小球${input.small_ball}次`
         },
-        resultFmt(input, key) {
+        resultFmt (input, key) {
             let result = input['result' + key]
-            if(result == "") return '-'
-            if(key === 2) {
+            if (result === '') return '-'
+            if (key === 2) {
                 result = input.handicapline + result
             }
             return result

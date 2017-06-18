@@ -36,7 +36,7 @@ export default {
     props: {
         counts: {
             type: Array,
-            default() {
+            default () {
                 return [6, 12]
             }
         },
@@ -50,15 +50,15 @@ export default {
         }
     },
     computed: {
-        status() {
+        status () {
             return this.$store.state.zqInfo.filter[this.type].status
         }
     },
     methods: {
-        closeBox() {
+        closeBox () {
             this.$parent.boxShow = false
         },
-        confirm() {
+        confirm () {
             this.$store.dispatch(aTypes.setStatus, {type: this.type, status: this.status})
             this.$store.dispatch(aTypes.getFilterData, {type: this.type, dispatchType: this.dispatchType})
             this.closeBox()
