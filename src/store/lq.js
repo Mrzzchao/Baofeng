@@ -4,171 +4,88 @@ const ns = 'lq'
 
 const state = {
     baseinfo: null,
-    situation: null,
+    events: null,
+    statistics: null,
+    members: null,
+    nbarank: null,
     leaguerank: null,
-    cuprank: null,
-    fifarank: null,
     jz_data: null,
     recent_record: null,
-    future_match: null,
-    lineup: null,
-    formation: null,
     params: {
+        fid: null,
+        stageid: null,
         homeid: null,
         awayid: null,
-        leagueid: null,
-        stid: null,
-        fid: null,
+        matchid: null,
         matchdate: null,
-        matchgroup: null,
-        isright: null,
-        hoa: 0,
-        limit: 6
-    },
-    filter: {  // 赛事过滤
-        jz_data: {
-            data: {},
-            status: {          // 选择结果状态，0-左,1-右
-                league: 0,
-                hoa: 0,
-                count: 0
-            }
-        },
-        recent_record: {
-            data: {},
-            status: {          // 选择结果状态，0-左,1-右
-                league: 0,
-                hoa: 0,
-                count: 0
-            }
-        }
+        group: null,
+        stagemode: null,
+        seasonid: null,
+        vtype: 1
     }
 }
 const actionsInfo = mapActions({
     async getBaseInfo ({commit}, fid) {
-        const baseinfo = await ajax.get(`/score/zq/baseinfo?fid=${fid}`)
+        const baseinfo = await ajax.get(`/score/lq/baseinfo?fid=${fid}`)
         commit(mTypes.setBaseInfo, baseinfo)
         commit(mTypes.setParams, {
+            fid: baseinfo.fid,
+            stageid: baseinfo.stageid,
             homeid: baseinfo.homeid,
             awayid: baseinfo.awayid,
-            matchdate: baseinfo.matchtime.substr(0, 10),
-            stid: baseinfo.stageid,
-            fid: baseinfo.fid,
-            matchgroup: baseinfo.matchgroup,
-            leagueid: -1,
-            hoa: 0,
-            limit: 6
+            matchid: baseinfo.matchid,
+            matchdate: baseinfo.matchdate,
+            group: baseinfo.group,
+            stagemode: baseinfo.stagemode,
+            seasonid: baseinfo.seasonid,
+            vtype: 1
         })
         return baseinfo
     },
-    async getSituation ({commit}, fid) {
-        const situation = await ajax.get(`/score/zq/events_statistics?fid=${fid}&T=${Date.now()}`)
-        situation.eventlist.reverse()
-        commit(mTypes.setSituation, situation)
-        return situation
+    async getEvents ({commit}, {fid}) {
+        const events = await ajax.get(`/score/lq/events?fid=${fid}&T=${Date.now()}`)
+        commit(mTypes.setEvents, events)
+        return events
     },
-    async getLeaguerank ({commit}, {homeid, awayid, matchdate, stid, fid}) {
-        const leaguerank = await ajax.get(`/score/zq/leaguerank?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&stid=${stid}&fid=${fid}&T=${Date.now()}`)
+    async getStatistics ({commit}, {fid}) {
+        const statistics = await ajax.get(`/score/lq/statistics?fid=${fid}&T=${Date.now()}`)
+        commit(mTypes.setStatistics, statistics)
+        return statistics
+    },
+    async getMembers ({commit}, {homeid, awayid, seasonid, vtype}) {
+        const members = await ajax.get(`/score/lq/members?homeid=${homeid}&awayid=${awayid}&seasonid=${seasonid}&vtype=${vtype}&T=${Date.now()}`)
+        commit(mTypes.setMembers, members)
+        return members
+    },
+    async getNBARank ({commit}, {homeid, awayid, seasonid}) {
+        const nbarank = await ajax.get(`/score/lq/nbarank?homeid=${homeid}&awayid=${awayid}&seasonid=${seasonid}&T=${Date.now()}`)
+        commit(mTypes.setNBARank, nbarank)
+        return nbarank
+    },
+    async getLeaguerank ({commit}, {fid, stageid, homeid, awayid, matchid, matchdate, group, stagemode}) {
+        const leaguerank = await ajax.get(`/score/lq/leaguerank?fid=${fid}&stageid=${stageid}&homeid=${homeid}&awayid=${awayid}&matchid=${matchid}&matchdate=${matchdate}&group=${group}&stagemode=${stagemode}&T=${Date.now()}`)
         commit(mTypes.setLeaguerank, leaguerank)
         return leaguerank
     },
-    async getCupRank ({commit}, {matchgroup, matchdate, stid}) {
-        const cuprank = await ajax.get(`/score/zq/cuprank?matchgroup=${matchgroup}&matchdate=${matchdate}&stid=${stid}&T=${Date.now()}`)
-        commit(mTypes.setCuprank, cuprank)
-        return cuprank
-    },
-    async getFifarank ({commit}, {homeid, awayid}) {
-        const fifarank = await ajax.get(`/score/zq/fifarank?homeid=${homeid}&awayid=${awayid}&T=${Date.now()}`)
-        commit(mTypes.setFifarank, fifarank)
-        return fifarank
-    },
-    async getJzData ({commit}, {homeid, awayid, matchdate, leagueid, limit, hoa}) {
-        const jz_data = await ajax.get(`/score/zq/jz_data?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
+    async getJzData ({commit}, {fid, stageid, homeid, awayid, matchdate}) {
+        const jz_data = await ajax.get(`/score/lq/jz_data?fid=${fid}&stageid=${stageid}&homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&T=${Date.now()}`)
         commit(mTypes.setJzData, jz_data)
         return jz_data
     },
-    async getRecentRecord ({commit}, {homeid, awayid, matchdate, leagueid, stid, limit, hoa}) {
-        const recent_record = await ajax.get(`/score/zq/recent_record?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&stid=${stid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
+    async getRecentRecord ({commit}, {fid, stageid, homeid, awayid, matchdate}) {
+        const recent_record = await ajax.get(`/score/lq/recent_record?fid=${fid}&stageid=${stageid}&homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&T=${Date.now()}`)
         commit(mTypes.setRecentRecord, recent_record)
         return recent_record
     },
-    async getFutureMatch ({commit}, {homeid, awayid, matchdate, fid}) {
-        const future_match = await ajax.get(`/score/zq/future_match?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&fid=${fid}&T=${Date.now()}`)
-        commit(mTypes.setFutureMatch, future_match)
-        return future_match
-    },
-    async getLineUp ({commit}, {fid, isright}) {
-        const lineup = await ajax.get(`/score/zq/lineup?isright=${isright}&fid=${fid}&T=${Date.now()}`)
-        commit(mTypes.setLineUp, lineup)
-        return lineup
-    },
-    async getFormation ({commit}, {homeid, awayid, fid}) {
-        const formation = await ajax.get(`/score/zq/formation?homeid=${homeid}&awayid=${awayid}&fid=${fid}&T=${Date.now()}`)
-        commit(mTypes.setFormation, formation)
-        return formation
-    },
     async getAllData ({state, commit, dispatch}, fid) {
         await dispatch(aTypes.getBaseInfo, fid)
-        dispatch(aTypes.getSituation, fid)
+        dispatch(aTypes.getEvents, state.params)
+        dispatch(aTypes.getStatistics, state.params)
+        dispatch(aTypes.getMembers, state.params)
+        dispatch(aTypes.getNBARank, state.params)
         dispatch(aTypes.getLeaguerank, state.params)
-        dispatch(aTypes.getCupRank, state.params)
-        // dispatch(aTypes.getFifarank, state.params)
-        await dispatch(aTypes.getJzData, state.params)
-        commit(mTypes.setFilterData_jz, '000')
-
-        state.params.limit = 10
-        await dispatch(aTypes.getRecentRecord, state.params)
-        commit(mTypes.setFilterData_recent, '000')
-
-        dispatch(aTypes.getLineUp, state.params)
-        dispatch(aTypes.getFormation, state.params)
-        // dispatch(aTypes.getFutureMatch, state.params)
-    },
-
-    async getFilterData ({state, commit, dispatch}, {type, dispatchType, counts}) {
-        let key = ''
-        let status = state.filter[type].status
-        for (let str in status) {
-            if (status.hasOwnProperty(str)) {
-                key += status[str]
-            }
-        }
-
-        if (state.filter[type].data && state.filter[type].data[key]) {
-            commit(mTypes['set' + dispatchType.slice(3)], state.filter[type].data[key])
-            return
-        }
-        dispatch(aTypes.setMatchParams, {type, counts})
-        await dispatch(aTypes[dispatchType], state.params)
-        if(~type.indexOf('jz'))
-            commit(mTypes.setFilterData_jz, key)
-        else
-            commit(mTypes.setFilterData_recent, key)
-    },
-    setStatus ({commit}, {type, status}) {
-        commit(mTypes.setStatus, {type, status})
-    },
-    setBoxShow ({commit}, statu) {
-        commit(mTypes.setBoxShow, statu)
-    },
-    setMatchParams ({commit}, {type, counts}) {
-        let paramsObj = {}
-        if (state.filter[type].status.league === 1) {
-            paramsObj.leagueid = state.baseinfo.league_id
-        }
-        else {
-            paramsObj.leagueid = -1
-        }
-
-        if (state.filter[type].status.hoa === 0) {
-            paramsObj.hoa = 0
-        }
-        else {
-            paramsObj.hoa = 1
-        }
-
-        paramsObj.limit = counts[state.filter[type].status.count]
-        commit(mTypes.setParams, paramsObj)
+        dispatch(aTypes.getJzData, state.params)
+        dispatch(aTypes.getRecentRecord, state.params)
     }
 }, ns)
 
@@ -176,38 +93,26 @@ const mutationsInfo = mapMutations({
     setBaseInfo (state, baseinfo) {
         state.baseinfo = baseinfo
     },
-    setSituation (state, situation) {
-        state.situation = situation
+    setEvents (state, events) {
+        state.events = events
     },
-    setRecentRecord (state, recent_record) {
-        state.recent_record = recent_record
+    setStatistics (state, statistics) {
+        state.statistics = statistics
     },
-    setCuprank (state, cuprank) {
-        state.cuprank = cuprank
+    setMembers (state, members) {
+        state.members = members
+    },
+    setNBARank (state, nbarank) {
+        state.nbarank = nbarank
     },
     setLeaguerank (state, leaguerank) {
         state.leaguerank = leaguerank
     },
-    setFifarank (state, fifarank) {
-        state.fifarank = fifarank
-    },
-    setFutureMatch (state, future_match) {
-        state.future_match = future_match
-    },
     setJzData (state, jz_data) {
         state.jz_data = jz_data
     },
-    setLineUp (state, lineup) {
-        state.lineup = lineup
-    },
-    setFormation (state, formation) {
-        state.formation = formation
-    },
-    setFilterData_jz(state, key) {
-        state.filter.jz_data.data[key] = state.jz_data
-    },
-    setFilterData_recent(state, key) {
-        state.filter.recent_record.data[key] = state.recent_record
+    setRecentRecord (state, recent_record) {
+        state.recent_record = recent_record
     },
     setParams (state, params) {
         for (var key in params) {
@@ -215,9 +120,6 @@ const mutationsInfo = mapMutations({
                 state.params[key] = params[key]
             }
         }
-    },
-    setStatus (state, {type, status}) {
-        state.filter[type].status = status
     }
 }, ns)
 

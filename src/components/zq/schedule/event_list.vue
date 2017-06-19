@@ -1,5 +1,5 @@
 <template>
-    <div v-if="noEmptyFlag">
+    <div v-if="noEmptyFlag && baseinfo">
         <div class="sk-nav bge6">
             事件
         </div>
@@ -22,7 +22,7 @@
                         </span>
                         <code class="jinqiu" v-if="event.eventtype === EventType.JIN_QIU.id && !(event.is_team)">进球</code>
                         <div class="ren-name">
-                            {{event.cdata | truncate(8)}}
+                            {{event.cdata === '' ? (event.is_team === 1 ? `【${baseinfo.homesxname}】` : `【${baseinfo.awaysxname}】`) : event.cdata | truncate(8)}}
                         </div>
                         <code class="jinqiu" v-if="event.eventtype === EventType.JIN_QIU.id && event.is_team">进球</code>
                     </div>
@@ -45,6 +45,9 @@ export default {
         }
     },
     computed: {
+        baseinfo() {
+            return this.$store.state.zqInfo.baseinfo
+        },
         events () {
             return this.$store.state.zqInfo.situation && this.$store.state.zqInfo.situation.eventlist
         },
