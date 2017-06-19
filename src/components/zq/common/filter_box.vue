@@ -26,7 +26,7 @@
                 <div class="ui-alert-btn" @click='confirm()'>确定</div>
             </div>
         </div>
-        <div class="ui-alert-layer" style="z-index: 95;"></div>
+        <div class="ui-alert-layer" style="z-index: 95;" @click='closeBox()'></div>
     </div>
 </template>
 
@@ -43,10 +43,6 @@ export default {
         type: {
             type: String,
             required: true
-        },
-        dispatchType: {
-            type: String,
-            required: true
         }
     },
     computed: {
@@ -60,7 +56,7 @@ export default {
         },
         confirm () {
             this.$store.dispatch(aTypes.setStatus, {type: this.type, status: this.status})
-            this.$store.dispatch(aTypes.getFilterData, {type: this.type, dispatchType: this.dispatchType})
+            this.$emit('confirm', this.counts)
             this.closeBox()
         }
     }

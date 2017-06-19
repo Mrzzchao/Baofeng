@@ -1,9 +1,19 @@
 <template >
-  <h1>member</h1>
+    <div>
+        <zxt></zxt>
+        <line-up></line-up>
+    </div>
 </template>
 
 <script>
+import lineUp from '~components/zq/analysis/member/lineup.vue'
+import zxt from '~components/zq/analysis/member/zxt.vue'
+
 export default {
+    components: {
+        lineUp,
+        zxt
+    }
 }
 </script>
 

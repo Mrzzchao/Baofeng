@@ -11,6 +11,8 @@ const state = {
     jz_data: null,
     recent_record: null,
     future_match: null,
+    lineup: null,
+    formation: null,
     params: {
         homeid: null,
         awayid: null,
@@ -19,12 +21,13 @@ const state = {
         fid: null,
         matchdate: null,
         matchgroup: null,
+        isright: null,
         hoa: 0,
         limit: 6
     },
     filter: {  // 赛事过滤
         jz_data: {
-            data: null,
+            data: {},
             status: {          // 选择结果状态，0-左,1-右
                 league: 0,
                 hoa: 0,
@@ -32,7 +35,7 @@ const state = {
             }
         },
         recent_record: {
-            data: null,
+            data: {},
             status: {          // 选择结果状态，0-左,1-右
                 league: 0,
                 hoa: 0,
@@ -81,53 +84,91 @@ const actionsInfo = mapActions({
     },
     async getJzData ({commit}, {homeid, awayid, matchdate, leagueid, limit, hoa}) {
         const jz_data = await ajax.get(`/score/zq/jz_data?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
-        commit(mTypes.setJzdata, jz_data)
+        commit(mTypes.setJzData, jz_data)
         return jz_data
     },
     async getRecentRecord ({commit}, {homeid, awayid, matchdate, leagueid, stid, limit, hoa}) {
-        const recent_rank = await ajax.get(`/score/zq/recent_record?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&stid=${stid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
-        commit(mTypes.setRecentRecord, recent_rank)
-        return recent_rank
+        const recent_record = await ajax.get(`/score/zq/recent_record?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&leagueid=${leagueid}&stid=${stid}&limit=${limit}&hoa=${hoa}&T=${Date.now()}`)
+        commit(mTypes.setRecentRecord, recent_record)
+        return recent_record
     },
     async getFutureMatch ({commit}, {homeid, awayid, matchdate, fid}) {
         const future_match = await ajax.get(`/score/zq/future_match?homeid=${homeid}&awayid=${awayid}&matchdate=${matchdate}&fid=${fid}&T=${Date.now()}`)
         commit(mTypes.setFutureMatch, future_match)
         return future_match
     },
-
-    async getAllData ({dispatch, state}, fid) {
+    async getLineUp ({commit}, {fid, isright}) {
+        const lineup = await ajax.get(`/score/zq/lineup?isright=${isright}&fid=${fid}&T=${Date.now()}`)
+        commit(mTypes.setLineUp, lineup)
+        return lineup
+    },
+    async getFormation ({commit}, {homeid, awayid, fid}) {
+        const formation = await ajax.get(`/score/zq/formation?homeid=${homeid}&awayid=${awayid}&fid=${fid}&T=${Date.now()}`)
+        commit(mTypes.setFormation, formation)
+        return formation
+    },
+    async getAllData ({state, commit, dispatch}, fid) {
         await dispatch(aTypes.getBaseInfo, fid)
         dispatch(aTypes.getSituation, fid)
         dispatch(aTypes.getLeaguerank, state.params)
         dispatch(aTypes.getCupRank, state.params)
         // dispatch(aTypes.getFifarank, state.params)
-        dispatch(aTypes.getJzData, state.params)
-        dispatch(aTypes.getRecentRecord, state.params)
+        await dispatch(aTypes.getJzData, state.params)
+        commit(mTypes.setFilterData_jz, '000')
+
+        state.params.limit = 10
+        await dispatch(aTypes.getRecentRecord, state.params)
+        commit(mTypes.setFilterData_recent, '000')
+
+        dispatch(aTypes.getLineUp, state.params)
+        dispatch(aTypes.getFormation, state.params)
         // dispatch(aTypes.getFutureMatch, state.params)
     },
 
-    async getFilterData ({dispatch, state}, {type, dispatchType}) {
+    async getFilterData ({state, commit, dispatch}, {type, dispatchType, counts}) {
         let key = ''
-        for (var str in state.filter[type].status) {
-            if (object.hasOwnProperty(str)) {
-                key += str
+        let status = state.filter[type].status
+        for (let str in status) {
+            if (status.hasOwnProperty(str)) {
+                key += status[str]
             }
         }
 
-        if (state.filter[type].data[key]) return
-        dispatch(aTypes.setParams, type)
-        dispatch(aTypes[dispatchType], state.params)
+        if (state.filter[type].data && state.filter[type].data[key]) {
+            commit(mTypes['set' + dispatchType.slice(3)], state.filter[type].data[key])
+            return
+        }
+        dispatch(aTypes.setMatchParams, {type, counts})
+        await dispatch(aTypes[dispatchType], state.params)
+        if(~type.indexOf('jz'))
+            commit(mTypes.setFilterData_jz, key)
+        else
+            commit(mTypes.setFilterData_recent, key)
     },
-    setStatus ({commit}, type, status) {
-        commit(mTypes.setStatus, type, status)
+    setStatus ({commit}, {type, status}) {
+        commit(mTypes.setStatus, {type, status})
     },
     setBoxShow ({commit}, statu) {
         commit(mTypes.setBoxShow, statu)
     },
-    setParams (type) {
-        if (state.filter[type].status.league === '1') {
-            state.league
+    setMatchParams ({commit}, {type, counts}) {
+        let paramsObj = {}
+        if (state.filter[type].status.league === 1) {
+            paramsObj.leagueid = state.baseinfo.league_id
         }
+        else {
+            paramsObj.leagueid = -1
+        }
+
+        if (state.filter[type].status.hoa === 0) {
+            paramsObj.hoa = 0
+        }
+        else {
+            paramsObj.hoa = 1
+        }
+
+        paramsObj.limit = counts[state.filter[type].status.count]
+        commit(mTypes.setParams, paramsObj)
     }
 }, ns)
 
@@ -138,8 +179,8 @@ const mutationsInfo = mapMutations({
     setSituation (state, situation) {
         state.situation = situation
     },
-    setRecentRecord (state, recent_rank) {
-        state.recent_rank = recent_rank
+    setRecentRecord (state, recent_record) {
+        state.recent_record = recent_record
     },
     setCuprank (state, cuprank) {
         state.cuprank = cuprank
@@ -153,11 +194,27 @@ const mutationsInfo = mapMutations({
     setFutureMatch (state, future_match) {
         state.future_match = future_match
     },
-    setJzdata (state, jz_data) {
+    setJzData (state, jz_data) {
         state.jz_data = jz_data
     },
+    setLineUp (state, lineup) {
+        state.lineup = lineup
+    },
+    setFormation (state, formation) {
+        state.formation = formation
+    },
+    setFilterData_jz(state, key) {
+        state.filter.jz_data.data[key] = state.jz_data
+    },
+    setFilterData_recent(state, key) {
+        state.filter.recent_record.data[key] = state.recent_record
+    },
     setParams (state, params) {
-        state.params = params
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                state.params[key] = params[key]
+            }
+        }
     },
     setStatus (state, {type, status}) {
         state.filter[type].status = status

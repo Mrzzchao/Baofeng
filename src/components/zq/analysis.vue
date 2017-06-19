@@ -1,7 +1,7 @@
 <template>
     <div>
+        <member></member>
         <record></record>
-        <!-- <member></member> -->
     </div>
 </template>
 

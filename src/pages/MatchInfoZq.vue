@@ -1,6 +1,8 @@
 <template>
-    <!-- <schedule></schedule> -->
-    <analysis></analysis>
+    <div>
+        <schedule></schedule>
+        <analysis></analysis>
+    </div>
 </template>
 
 <script>

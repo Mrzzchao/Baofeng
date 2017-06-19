@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="noEmptyFlag">
         <div class="sk-nav bge6">
             事件
         </div>
@@ -55,6 +55,9 @@ export default {
             })
 
             return obj
+        },
+        noEmptyFlag() {
+            return this.noEmpty(this.events)
         }
     },
     methods: {
@@ -64,6 +67,11 @@ export default {
             str = event.is_team ? 'shikuang-lineLeft' : 'shikuang-lineRight'
             str += event.eventtype === EventType.HUAN_REN.id ? ' jh-box' : ''
             return str
+        },
+        noEmpty(obj) {
+            if(obj)
+                return !!Object.keys(obj).length
+            return false
         }
     },
     filters: {
