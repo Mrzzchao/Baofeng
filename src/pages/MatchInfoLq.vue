@@ -1,7 +1,7 @@
 <template>
     <div>
         <schedule></schedule>
-        <!-- <analysis></analysis> -->
+        <analysis></analysis>
     </div>
 </template>
 

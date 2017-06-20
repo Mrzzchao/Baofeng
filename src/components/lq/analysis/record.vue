@@ -1,8 +1,8 @@
 <template>
-    <div v-if="isCup">
-        <cup-rank v-if="isCup === '1'"></cup-rank>
-        <league-rank v-else></league-rank>
-
+    <div>
+        <!-- <cup-rank v-if="isCup === '1'"></cup-rank> -->
+        <!-- <league-rank></league-rank>
+        <NBA-rank></NBA-rank> -->
         <jz-data></jz-data>
         <recent-record></recent-record>
         <!-- <future-match></future-match> -->
@@ -10,26 +10,28 @@
 </template>
 
 <script>
-import leagueRank from '~components/zq/analysis/record/league_rank.vue'
-import cupRank from '~components/zq/analysis/record/cup_rank.vue'
-import jzData from '~components/zq/analysis/record/jz_data.vue'
-import recentRecord from '~components/zq/analysis/record/recent_record.vue'
-import futureMatch from '~components/zq/analysis/record/future_match.vue'
+import leagueRank from '~components/lq/analysis/record/league_rank.vue'
+import NBARank from '~components/lq/analysis/record/nba_rank.vue'
+import cupRank from '~components/lq/analysis/record/cup_rank.vue'
+import jzData from '~components/lq/analysis/record/jz_data.vue'
+import recentRecord from '~components/lq/analysis/record/recent_record.vue'
+import futureMatch from '~components/lq/analysis/record/future_match.vue'
 
 export default {
     components: {
         leagueRank,
         cupRank,
+        NBARank,
         jzData,
         recentRecord,
         futureMatch
     },
     computed: {
         baseinfo() {
-            return this.$store.state.zqInfo.baseinfo
+            return this.$store.state.lqInfo.baseinfo
         },
         isCup() {
-            return this.$store.state.zqInfo.baseinfo && this.$store.state.zqInfo.baseinfo.is_cup
+            return this.$store.state.lqInfo.baseinfo && this.$store.state.zqInfo.baseinfo.is_cup
         }
     }
 }

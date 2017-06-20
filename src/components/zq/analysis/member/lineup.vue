@@ -1,4 +1,4 @@
-return <template>
+<template>
     <div v-if="noEmptyFlag">
         <div class="zhedie-box" v-if="noEmptyFlag_sf">
         	<div class="zj-nav">

@@ -1,7 +1,7 @@
 <template>
     <div>
         <event-list></event-list>
-        <!-- <statistic-list></statistic-list> -->
+        <statistic-list></statistic-list>
     </div>
 </template>
 

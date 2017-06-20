@@ -17,11 +17,11 @@
                         {{baseinfo.homesxname}}(主)</li>
                 </ul>
             </div>
-            <div class="jie-detailR" v-if="lastEvents">
+            <div class="jie-detailR" >
                 <div id="slider" class="slide-box mr40">
                     <div class="t-nav">
                         <div class="responsive">
-                            <div v-for="idx in eventLength">
+                            <div v-for="idx in sectionScore_h.length">
                                 <div class="wjie" v-if="idx < 5">
                                     {{idx}}节
                                 </div>
@@ -33,13 +33,13 @@
                     </div>
                     <ul class="t-detail">
                         <li class="responsive">
-                            <div class="wjie" v-for="event in lastEvents">
-                                {{event.awayscore}}
+                            <div class="wjie" v-for="score in sectionScore_a">
+                                {{score}}
                             </div>
                         </li>
                         <li class="responsive">
-                            <div class="wjie" v-for="event in lastEvents">
-                                {{event.homescore}}
+                            <div class="wjie" v-for="score in sectionScore_h">
+                                {{score}}
                             </div>
                         </li>
                     </ul>
@@ -49,10 +49,10 @@
                         总分
                     </div>
                     <div class="zongfen red-zf">
-                        {{lastEvents[eventLength - 1].awayscore}}
+                        {{baseinfo.awayscore}}
                     </div>
                     <div class="zongfen red-zf">
-                        {{lastEvents[eventLength - 1].homescore}}
+                        {{baseinfo.homescore}}
                     </div>
                 </div>
                 <div class="sli-line">
@@ -69,16 +69,11 @@ export default {
         baseinfo() {
             return this.$store.state.lqInfo.baseinfo
         },
-        events() {
-            return this.$store.state.lqInfo.events
+        sectionScore_h() {
+            return this.baseinfo.hscore.split('-')
         },
-        eventLength() {
-            return this.events && this.events.length
-        },
-        lastEvents() {
-            return this.events && this.events.map((arr) => {
-                return arr[arr.length - 1]
-            })
+        sectionScore_a() {
+            return this.baseinfo.ascore.split('-')
         }
     }
 }

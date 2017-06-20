@@ -1,138 +1,93 @@
 <template>
-    <div class="zhedie-box" v-if="noEmptyFlag">
+    <div v-if="baseinfo && noEmptyFlag">
     	<div class="zhedie-box">
     		<div class="zj-nav">
-    			{{leaguerank.title}} 联赛积分排名
-    			<ul class="volumeTab" id="tabBefore">
-    				<li :class="{'cur': tab1 === 'all'}" @click="onTab('all', 'all')">全部</li>
-    				<li :class="{'cur': tab1 === 'home'}" @click="onTab('home', 'away')">主客</li>
-    			</ul>
+    			联赛排名
     		</div>
-    		<div class="zhedie show">
-    			<table width="100%" cellpadding="0" cellspacing="0" class="fx-table fb">
-    			<tbody>
-    			<tr>
-    				<th colspan="2">
-    					排名
-    				</th>
-    				<th width="18%">
-    					赛事
-    				</th>
-    				<th width="10%">
-    					赛
-    				</th>
-    				<th width="15%">
-    					胜/平/负
-    				</th>
-    				<th width="12%">
-    					进/失
-    				</th>
-    				<th width="12%">
-    					积分
-    				</th>
-    			</tr>
-    			<tr v-if="noEmptyFlag_home">
-    				<td>
-    					{{leaguerank.hometeam[tab1].standing}}
-    				</td>
-    				<td>
-    					<div class="rank-team">
-    						<img :src="leaguerank.hometeam.teamlogo">{{baseinfo.homesxname}}
-    					</div>
-    				</td>
-    				<td>
-    					{{leaguerank.hometeam.leaguename}}
-    				</td>
-    				<td>
-    					{{leaguerank.hometeam[tab1].matches_count}}
-    				</td>
-    				<td>
-    					{{leaguerank.hometeam[tab1] | resultFmt}}
-    				</td>
-    				<td>
-    					{{leaguerank.hometeam[tab1] | goalFmt}}
-    				</td>
-    				<td>
-    					<p class="textcenter">
-    						{{leaguerank.hometeam[tab1].score}}
-    					</p>
-    				</td>
-    			</tr>
-                <tr v-if="noEmptyFlag_away">
-    				<td>
-    					{{leaguerank.awayteam[tab2].standing}}
-    				</td>
-    				<td>
-    					<div class="rank-team">
-    						<img :src="leaguerank.awayteam.teamlogo">{{baseinfo.awaysxname}}
-    					</div>
-    				</td>
-    				<td>
-    					{{leaguerank.awayteam.leaguename}}
-    				</td>
-    				<td>
-    					{{leaguerank.awayteam[tab2].matches_count}}
-    				</td>
-    				<td>
-    					{{leaguerank.awayteam[tab2] | resultFmt}}
-    				</td>
-    				<td>
-    					{{leaguerank.awayteam[tab2] | goalFmt}}
-    				</td>
-    				<td>
-    					<p class="textcenter">
-    						{{leaguerank.awayteam[tab2].score}}
-    					</p>
-    				</td>
-    			</tr>
-    			</tbody>
-    			</table>
+    		<div class="zhedie">
+    			<div v-for="hoa in ['away', 'home']">
+    				<div class="pm-namel">
+    					{{baseinfo[hoa + 'sxname']}} ({{baseinfo.simpleleague}})
+    				</div>
+    				<table width="100%" cellpadding="0" cellspacing="0" class="fx-table fb">
+    				<tbody>
+    				<tr>
+    					<th width="12%">
+    						场次
+    					</th>
+    					<th width="10%">
+    						比赛
+    					</th>
+    					<th width="10%">
+    						胜
+    					</th>
+    					<th width="10%">
+    						负
+    					</th>
+    					<th width="10%">
+    						进
+    					</th>
+    					<th width="10%">
+    						失
+    					</th>
+    					<th width="10%">
+    						净
+    					</th>
+    					<th width="12%">
+    						排名
+    					</th>
+    				</tr>
+    				<tr v-for="(tname, tab) in tabs">
+    					<td>
+    						<span class="color9 f23">{{tname}}</span>
+    					</td>
+                        <td v-for="(lname, type) in LeagueRankType">
+    						{{leaguerankFmt[hoa][tab + type]}}
+    					</td>
+    				</tr>
+    				</tbody>
+    				</table>
+    			</div>
     		</div>
     	</div>
     </div>
 </template>
 
 <script>
+import {LeagueRankType} from '~common/constants'
+
 export default {
     data () {
         return {
-            tab1: 'all',
-            tab2: 'all'
+            LeagueRankType,
+            tabs: {
+                '': '全部',
+                'h': '主场',
+                'a': '客场'
+            }
         }
     },
     computed: {
         leaguerank () {
-            return this.$store.state.zqInfo.leaguerank
+            return this.$store.state.lqInfo.leaguerank
         },
         baseinfo () {
-            return this.$store.state.zqInfo.baseinfo
+            return this.$store.state.lqInfo.baseinfo
+        },
+        leaguerankFmt () {
+            return {
+                home: this.leaguerank[1],
+                away: this.leaguerank[0]
+            }
         },
         noEmptyFlag() {
-            return this.noEmpty(this.leaguerank) && this.noEmptyFlag_home && this.noEmptyFlag_away
-        },
-        noEmptyFlag_home() {
-            return this.noEmpty(this.leaguerank.hometeam)
-        },
-        noEmptyFlag_away() {
-            return this.noEmpty(this.leaguerank.awayteam)
+            return this.noEmpty(this.leaguerank)
         }
     },
     methods: {
         noEmpty(obj) {
             if(obj) return !!Object.keys(obj).length
             return false
-        },
-        onTab (tab1, tab2) {
-            this.tab1 = tab1
-            this.tab2 = tab2
-        }
-    },
-    filters: {
-        resultFmt (result) {
-            return `${result.win}/${result.draw}/${result.lost}`
-        },
-        goalFmt (goal) {
-            return `${goal.innum}/${goal.lostnum}`
         }
     }
 }

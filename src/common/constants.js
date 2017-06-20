@@ -48,3 +48,65 @@ export const EventType = {
         id: '12'
     }
 }
+
+export const StatisticsType_LQ = {
+    shoot: '投篮',
+    third: '三分',
+    penalty_kick: '罚球',
+    offensiverebound: '前篮板',
+    defensiverebound: '后篮板',
+    rebs: '总篮板',
+    assists: '助攻',
+    steals: '抢断',
+    block_shot: '盖帽',
+    fehlpass: '失误',
+    foul: '犯规',
+    score: '得分'
+}
+
+export const Statistics_LQ_TH = {
+    time: '时间',
+    score: '得分',
+    shoot: '投篮',
+    rebs: '篮板',
+    assists: '助攻',
+    offensiverebound: '抢断',
+    block_shot: '盖帽',
+    fehlpass: '失误',
+    foul: '犯规'
+}
+
+export const StatisticsType_ZQ = {
+    shot_count: '射门',
+    shotin_count: '射正',
+    danger_attack_count: '危险进攻',
+    attack_count: '进攻次数',
+    red_count: '红牌',
+    yellow_count: '黄牌',
+    foul_count: '犯规',
+    // ballcontrol_rate: '控球',
+    offset_count: '越位',
+    corner_count: '角球',
+    freekick_count: '任意球'
+    // scrambling_count: '救球',
+    // passing_count: '传球',
+    // steals_count: '强球'
+}
+
+export const Best3Type = {
+    points: '得分',
+    rebounds: '篮板',
+    assists: '助攻',
+    steals: '抢断',
+    cap: '盖帽'
+}
+
+export const LeagueRankType = {
+    count: '比赛',
+    win: '胜',
+    lost: '负',
+    gain: '进',
+    miss: '失',
+    clean: '净',
+    standing: '排名'
+}

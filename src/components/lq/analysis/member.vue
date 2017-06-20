@@ -1,18 +1,15 @@
 <template >
     <div>
-        <zxt></zxt>
-        <line-up></line-up>
+        <data-top></data-top>
     </div>
 </template>
 
 <script>
-import lineUp from '~components/zq/analysis/member/lineup.vue'
-import zxt from '~components/zq/analysis/member/zxt.vue'
+import dataTop from '~components/lq/analysis/member/data_top.vue'
 
 export default {
     components: {
-        lineUp,
-        zxt
+        dataTop
     }
 }
 </script>

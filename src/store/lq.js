@@ -6,6 +6,7 @@ const state = {
     baseinfo: null,
     events: null,
     statistics: null,
+    best3: null,
     members: null,
     nbarank: null,
     leaguerank: null,
@@ -52,6 +53,11 @@ const actionsInfo = mapActions({
         commit(mTypes.setStatistics, statistics)
         return statistics
     },
+    async getBestMember ({commit}, {homeid, awayid, seasonid}) {
+        const best3 = await ajax.get(`/score/lq/best3?homeid=${homeid}&awayid=${awayid}&seasonid=${seasonid}&T=${Date.now()}`)
+        commit(mTypes.setBestMember, best3)
+        return best3
+    },
     async getMembers ({commit}, {homeid, awayid, seasonid, vtype}) {
         const members = await ajax.get(`/score/lq/members?homeid=${homeid}&awayid=${awayid}&seasonid=${seasonid}&vtype=${vtype}&T=${Date.now()}`)
         commit(mTypes.setMembers, members)
@@ -81,7 +87,8 @@ const actionsInfo = mapActions({
         await dispatch(aTypes.getBaseInfo, fid)
         dispatch(aTypes.getEvents, state.params)
         dispatch(aTypes.getStatistics, state.params)
-        dispatch(aTypes.getMembers, state.params)
+        dispatch(aTypes.getBestMember, state.params)
+        // dispatch(aTypes.getMembers, state.params)
         dispatch(aTypes.getNBARank, state.params)
         dispatch(aTypes.getLeaguerank, state.params)
         dispatch(aTypes.getJzData, state.params)
@@ -98,6 +105,9 @@ const mutationsInfo = mapMutations({
     },
     setStatistics (state, statistics) {
         state.statistics = statistics
+    },
+    setBestMember (state, best3) {
+        state.best3 = best3
     },
     setMembers (state, members) {
         state.members = members

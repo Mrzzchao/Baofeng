@@ -22,7 +22,7 @@
                         </span>
                         <code class="jinqiu" v-if="event.eventtype === EventType.JIN_QIU.id && !(event.is_team)">进球</code>
                         <div class="ren-name">
-                            {{event.cdata === '' ? (event.is_team === 1 ? `【${baseinfo.homesxname}】` : `【${baseinfo.awaysxname}】`) : event.cdata | truncate(8)}}
+                            {{event.cdata === '' ? (event.is_team === 1 ? `【${baseinfo.homesxname}】` : `【${baseinfo.awaysxname}】`) : event.cdata | truncate(12)}}
                         </div>
                         <code class="jinqiu" v-if="event.eventtype === EventType.JIN_QIU.id && event.is_team">进球</code>
                     </div>

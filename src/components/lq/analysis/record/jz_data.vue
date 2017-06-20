@@ -2,19 +2,17 @@
     <div v-if="noEmptyFlag">
         <div class="zhedie-box">
             <div class="zj-nav">
-                <span class="saixuan" @click='boxShow=!boxShow'>筛选</span> 历史交战
+                 历史交战
             </div>
             <fight-box :matchesObj='jz_data' :isJz='isJz' v-if="jz_data">
             </fight-box>
         </div>
-        <filter-box v-if="boxShow" type='jz_data' @confirm='updateData'></filter-box>
     </div>
 </template>
 
 <script>
-import {aTypes} from '~store/zq.js'
-import fightBox from '~components/zq/common/fight_box.vue'
-import filterBox from '~components/zq/common/filter_box.vue'
+import {aTypes} from '~store/lq.js'
+import fightBox from '~components/lq/common/fight_box.vue'
 
 export default {
     data () {
@@ -24,12 +22,11 @@ export default {
         }
     },
     components: {
-        fightBox,
-        filterBox
+        fightBox
     },
     computed: {
         jz_data () {
-            return this.$store.state.zqInfo.jz_data
+            return this.$store.state.lqInfo.jz_data
         },
         noEmptyFlag() {
             return this.noEmpty(this.jz_data)

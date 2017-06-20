@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import record from '~components/zq/analysis/record.vue'
-import member from '~components/zq/analysis/member.vue'
+import record from '~components/lq/analysis/record.vue'
+import member from '~components/lq/analysis/member.vue'
 
 export default {
     components: {
