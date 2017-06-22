@@ -110,3 +110,17 @@ export const LeagueRankType = {
     clean: '净',
     standing: '排名'
 }
+
+export const LeagueStatistictType_LQ = {
+    score: '得分',
+    lost: '失分',
+    fieldgoal: '投篮命中率',
+    threepoint: '三分命中率',
+    freethrow: '罚球命中率',
+    rebound: '篮板',
+    assist: '助攻',
+    block: '盖帽',
+    steal: '抢断',
+    turnover: '失误',
+    foul: '犯规'
+}
