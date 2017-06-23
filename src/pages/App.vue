@@ -11,6 +11,9 @@
     </div>
 </template>
 <style>
+.wrapper {
+    top: 1rem;
+}
 .we {
     position: relative;
     background: #fff;

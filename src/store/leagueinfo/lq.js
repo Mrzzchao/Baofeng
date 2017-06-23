@@ -17,10 +17,11 @@ const actionsInfo = mapActions({
     async getBaseInfo ({commit}, sid) {
         const baseinfo = await ajax.get(`/library/lq/baseinfo?seasonid=${sid}&T=${Date.now()}`)
         commit(mTypes.setBaseInfo, baseinfo)
-        commit(mTypes.setParams, {
-            sid: baseinfo.seasonid,
-            iscup: baseinfo.iscup
-        })
+        if(!!Object.keys(baseinfo).length)
+            commit(mTypes.setParams, {
+                sid: baseinfo.seasonid,
+                iscup: baseinfo.iscup
+            })
         return baseinfo
     },
     async getRank ({commit}, {sid, iscup}) {
@@ -38,13 +39,17 @@ const actionsInfo = mapActions({
         commit(mTypes.setStatisticsArr, {statistics, key})
         return statistics
     },
+    async getStatistics_Refresh ({state, commit}, {sid, key}) {
+        const statistics = await ajax.get(`/library/lq/statistic?seasonid=${sid}&key=${key}&T=${Date.now()}`)
+        commit(mTypes.setStatistics, statistics)
+        commit(mTypes.setStatisticsArr, {statistics, key})
+        return statistics
+    },
     async getAllData_Rank({state, dispatch}, sid) {
-        if(state.rank && sid === state.params.sid) return
         await dispatch(aTypes.getBaseInfo, sid)
         dispatch(aTypes.getRank, state.params)
     },
     async getAllData_Stat({state, dispatch}, sid) {
-        if(state.statistics && sid === state.params.sid) return
         await dispatch(aTypes.getBaseInfo, sid)
         dispatch(aTypes.getStatistics, state.params)
     },

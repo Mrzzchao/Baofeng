@@ -39,7 +39,7 @@
 				<span class="color9">{{match.simplegbname}}</span><span class="colorc f20">{{match.matchdate.slice(2, 10)}}</span>
 			</td>
 			<td>
-				<div class="textright" :class="makeTeamClass(match, match.homesxname)">
+				<div class="textright" :class="homeTeamClass[idx]">
                     <span class="color9" v-if="match.homestanding > 0">[{{match.homestanding}}]</span>
 					{{match.homesxname}}
 				</div>
@@ -48,7 +48,7 @@
 				{{match.homescore}}:{{match.awayscore}}<span class="color9">({{match.homehalfscore}}:{{match.awayhalfscore}})</span>
 			</td>
 			<td>
-				<div class="textleft" :class="makeTeamClass(match, match.awaysxname)">
+				<div class="textleft" :class="awayTeamClass[idx]">
 					{{match.awaysxname}}
                     <span class="color9" v-if="match.awaystanding > 0">[{{match.awaystanding}}]</span>
 				</div>
@@ -87,7 +87,17 @@ export default {
         },
         matches () {
             return this.matchesObj.matches.slice(0, 6)
-        }
+        },
+		homeTeamClass() {
+			return this.matches && this.matches.map((item) => {
+				return this.makeTeamClass(item, item.homesxname)
+			})
+		},
+		awayTeamClass() {
+			return this.matches && this.matches.map((item) => {
+				return this.makeTeamClass(item, item.awaysxname)
+			})
+		}
     },
     methods: {
         switchResult () {

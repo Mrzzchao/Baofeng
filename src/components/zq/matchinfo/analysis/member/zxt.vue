@@ -50,7 +50,7 @@ export default {
             return this.$store.state.matchZq.formation
         },
         alineup() {
-            return this.$store.state.matchZq.formation && this.$store.state.matchZq.formation.alineup
+            return this.$store.state.matchZq.formation && this.$store.state.matchZq.formation.alineup.reverse()
         },
         homeZx() {
             return `${this.baseinfo && this.baseinfo.homesxname}阵型 ${this.formation.hformation && this.formation.hformation.split('').join('-')}`

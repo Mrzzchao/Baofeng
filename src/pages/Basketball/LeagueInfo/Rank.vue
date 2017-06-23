@@ -6,6 +6,8 @@
                 <rank-list :data="rank.values"></rank-list>
             </div>
         </div>
+        <prompt v-else type="no-data" tip0="暂无数据"/>
+        <refresh-box :dispatchName='aTypes.getRank' :param='$store.state.leagueLq.params'></refresh-box>
     </section>
 </template>
 
@@ -13,10 +15,20 @@
 import {aTypes} from '~store/leagueinfo/lq'
 import rankListN from '~components/lq/leagueinfo/rank_list_nba.vue'
 import rankList from '~components/lq/leagueinfo/rank_list.vue'
+import refreshBox from '~components/common/refresh_box.vue'
+import Prompt from '~components/common/prompt.vue'
+
 export default {
     components: {
         rankListN,
-        rankList
+        rankList,
+        refreshBox,
+        Prompt
+    },
+    data() {
+        return {
+            aTypes
+        }
     },
     computed: {
         rank() {
@@ -36,6 +48,7 @@ export default {
         }
     },
     mounted() {
+        if(this.$store.state.leagueLq.rank && this.$store.state.leagueLq.params.sid === this.$route.params.sid) return
         this.$store.dispatch(aTypes.getAllData_Rank, this.$route.params.sid)
     }
 

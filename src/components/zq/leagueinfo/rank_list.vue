@@ -23,7 +23,7 @@
                                     <th>净</th>
                                     <th>积分</th>
                                 </tr>
-                                <tr v-tap="{methods: toTeamMatches, teamId: list.teamid}" v-for="(list, idx) in data.values">
+                                <tr v-for="(list, idx) in data.values">
                                     <td>
                                         <em class="cate-cont"><i class="game-category" :style="styleSelect(list)">{{idx+1}}</i></em>
                                         <em class="gamer-cont"><img :src="list.teamlogo">{{list.teamsxname}}</em>
@@ -63,7 +63,7 @@
                                     <th>净</th>
                                     <th>积分</th>
                                 </tr>
-                                <tr v-tap="{methods: toTeamMatches, teamId: list.teamid}" v-for="(list, idx) in data.values[key]">
+                                <tr v-for="(list, idx) in data.values[key]">
                                     <td>
                                         <em class="cate-cont"><i class="game-category" :style="styleSelect(list)">{{idx+1}}</i></em>
                                         <em class="gamer-cont"><img :src="list.teamlogo">{{list.teamsxname}}</em>
@@ -85,14 +85,10 @@
 </template>
 
 <script>
-import vue from 'vue'
-import vueTap from 'v-tap'
 import Prompt from '~components/common/prompt.vue'
-vue.use(vueTap)
 
 export default {
     components: {
-        vueTap,
         Prompt
     },
     computed: {

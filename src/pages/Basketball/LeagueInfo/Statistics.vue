@@ -1,6 +1,6 @@
 <template>
 <section class="count-main l-flex-1 l-relative">
-    <div class="l-flex-row l-full">
+    <div class="l-flex-row l-full" v-if="noEmptyFlag">
         <div class="plleft l-flex-column">
             <ul class="plleft-list l-scroll-y l-flex-1">
                 <li :class="{'cur': type === key}" v-for="(name, type) in statisticsType" v-tap='{methods: updateData, type: type}'>{{name}}</li>
@@ -19,6 +19,8 @@
             </ul>
         </div>
     </div>
+    <prompt v-else type="no-data" tip0="暂无数据"/>
+    <refresh-box :dispatchName='aTypes.getStatistics_Refresh' :param='{sid: $route.params.sid, key: key}'></refresh-box>
 </section>
 </template>
 
@@ -29,23 +31,31 @@ import {
 import {
     LeagueStatistictType_LQ
 } from '~common/constants'
+import refreshBox from '~components/common/refresh_box.vue'
+import Prompt from '~components/common/prompt.vue'
 import vueTap from 'v-tap'
 import vue from 'vue'
 vue.use(vueTap)
 
 export default {
     components: {
-        vueTap
+        vueTap,
+        refreshBox,
+        Prompt
     },
     data() {
         return {
             statisticsType: LeagueStatistictType_LQ,
-            key: 'score'
+            key: 'score',
+            aTypes
         }
     },
     computed: {
         statistics() {
             return this.$store.state.leagueLq.statistics
+        },
+        noEmptyFlag() {
+            return this.noEmpty(this.statistics)
         }
     },
     methods: {
@@ -53,9 +63,14 @@ export default {
             this.key = type
             this.$store.dispatch(aTypes.setParamKey, type)
             this.$store.dispatch(aTypes.getStatistics, this.$store.state.leagueLq.params)
+        },
+        noEmpty(obj) {
+            if (obj) return !!Object.keys(obj).length
+            return false
         }
     },
     mounted() {
+        if(this.$store.state.leagueLq.statistics && this.$store.state.leagueLq.params.sid === this.$route.params.sid) return
         this.$store.dispatch(aTypes.getAllData_Stat, this.$route.params.sid)
     }
 }

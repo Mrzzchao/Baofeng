@@ -44,12 +44,10 @@ const actionsInfo = mapActions({
         return statistics
     },
     async getAllData_Inter({state, dispatch}, sid) {
-        if(state.integrate && sid === state.params.sid) return
         await dispatch(aTypes.getBaseInfo, sid)
         dispatch(aTypes.getIntegrate, state.params)
     },
     async getAllData_Stat({state, dispatch}, sid) {
-        if(state.statistics && sid === state.params.sid) return
         await dispatch(aTypes.getBaseInfo, sid)
         dispatch(aTypes.getStatistics, state.params)
     }

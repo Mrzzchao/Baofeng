@@ -33,10 +33,10 @@
 			<tr v-for="(match, idx) in matches">
 				<td>
 					<span class="color9">{{match.simpleleague}}</span><span class="colorc f20">{{match.date.slice(2, 10)}}</span>
-					<em class="bkb-icon" v-if="isBKB(match, idx)"></em>
+					<em class="bkb-icon" v-if="bkbStatus[idx]"></em>
 				</td>
 				<td>
-					<div class="textright" :class="makeTeamClass(match, match.awaysxname)">
+					<div class="textright" :class="awayTeamClass[idx]">
 						<span class="color9" v-if="match.awaystanding > 0">[{{match.awaystanding}}]</span>
 						{{match.awaysxname}}
 					</div>
@@ -45,7 +45,7 @@
 					{{match.ascore}}:{{match.hscore}}<span class="color9">[{{match.total}}]</span>
 				</td>
 				<td>
-					<div class="textleft" :class="makeTeamClass(match, match.homesxname)">
+					<div class="textleft" :class="homeTeamClass[idx]">
 						{{match.homesxname}}
 						<span class="color9" v-if="match.homestanding > 0">[{{match.homestanding}}]</span>
 					</div>
@@ -75,9 +75,7 @@ export default {
                 'win',
                 'tie',
                 'lose'
-            ],
-
-			bkbIdx: null
+            ]
         }
     },
     computed: {
@@ -86,7 +84,25 @@ export default {
         },
         matches () {
             return this.matchesObj.matches
-        }
+        },
+		bkbStatus() {
+			return this.matches && this.matches.map((item, idx, arr) => {
+				let flag = item.isb2b === '1'
+				if(flag) arr[idx + 1].isb2b = '0'
+				return flag
+			})
+		},
+		homeTeamClass() {
+			return this.matches && this.matches.map((item) => {
+				return this.makeTeamClass(item, item.homesxname)
+			})
+		},
+		awayTeamClass() {
+			return this.matches && this.matches.map((item) => {
+				return this.makeTeamClass(item, item.awaysxname)
+			})
+		}
+
     },
     methods: {
         switchResult () {
@@ -113,18 +129,12 @@ export default {
             let result = match.result1
             let key = 0
             switch (result) {
-            case '胜': key = 0; break
-            case '平': key = 1; break
-            case '负': key = 2; break
+	            case '胜': key = 0; break
+	            case '平': key = 1; break
+	            case '负': key = 2; break
             }
             return name === this.baseinfo[this.hoa] ? this.teamClassMap[key] : ''
-        },
-		isBKB(match, idx) {
-			if(match.isb2b === '0') return false
-			if((idx - 1) === this.bkbIdx) return false
-			this.bkbIdx = idx
-			return true
-		}
+        }
     },
     props: {
         matchesObj: {

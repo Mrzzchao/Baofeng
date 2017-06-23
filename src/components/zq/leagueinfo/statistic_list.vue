@@ -43,6 +43,7 @@
 
 <script>
 import Prompt from '~components/common/prompt.vue'
+
 export default {
     components: {
         Prompt
