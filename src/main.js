@@ -3,7 +3,6 @@ import Vue from 'vue'
 import App from './pages/App.vue'
 import storeFactory from './store'
 import router from './router'
-import { sync } from 'vuex-router-sync'
 
 const store = storeFactory()
 

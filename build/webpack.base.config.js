@@ -8,8 +8,8 @@ const srcPath = path.resolve(__dirname, '../src')
 module.exports = {
     context: srcPath,
     entry: {
-        app: [path.join(srcPath, 'main.js')],
-        vendor: ['vue', 'vue-router', 'vuex', 'v-tap', 'vuex-router-sync', 'es6-promise', 'axios']
+        app: [path.join(srcPath, 'main.js')]
+        // vendor: ['vue', 'vue-router', 'vuex', 'v-tap', 'es6-promise', 'axios']
     },
 
     module: {
@@ -41,8 +41,8 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: path.join(srcPath, 'index.ejs'),
-            chunks: ['manifest', 'vendor', 'app']
+            template: path.join(srcPath, 'index.ejs')
+            // chunks: ['manifest', 'vendor', 'main']
         })
 
         /* new CopyWebpackPlugin([

@@ -65,7 +65,7 @@
                                 </tr>
                                 <tr v-for="(list, idx) in data.values[key]">
                                     <td>
-                                        <em class="cate-cont"><i class="game-category" :style="styleArr[idx]">{{idx+1}}</i></em>
+                                        <em class="cate-cont"><i class="game-category" :style="styleObj[key][idx]">{{idx+1}}</i></em>
                                         <em class="gamer-cont"><img :src="list.teamlogo">{{list.teamsxname}}</em>
                                     </td>
                                     <td>{{list.total}}</td>
@@ -102,6 +102,15 @@ export default {
             return this.data.values.map((rank) => {
                 return this.styleSelect(rank)
             })
+        },
+        styleObj() {
+            let styleObj = {}
+            this.data.sort.forEach((key) => {
+                styleObj[key] = this.data.values[key].map((rank) => {
+                    return this.styleSelect(rank)
+                })
+            })
+            return styleObj
         }
     },
     props: {
