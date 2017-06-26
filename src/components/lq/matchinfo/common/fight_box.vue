@@ -51,7 +51,7 @@
 					</div>
 				</td>
 				<td @click='switchResult()'>
-					<div :class="makeResultClass(match, idx)">
+					<div :class="resultClass[idx]">
 						{{match | resultFmt(key)}}
 					</div>
 				</td>
@@ -100,6 +100,11 @@ export default {
 		awayTeamClass() {
 			return this.matches && this.matches.map((item) => {
 				return this.makeTeamClass(item, item.awaysxname)
+			})
+		},
+		resultClass() {
+			return this.matches.map((match) => {
+				return this.makeResultClass(match)
 			})
 		}
 

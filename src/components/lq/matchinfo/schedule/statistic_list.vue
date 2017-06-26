@@ -15,15 +15,15 @@
                                 {{name}}
                             </div>
                             <div class="responsive">
-                                <div class="each-resone l-relative">
-                                    <div class="zhzl-vs-left" :class="makeColorClass(type)" :style="makeWidthStyle(type)">
-                                    </div>
-                                </div>
-                                <div class="each-resone l-relative">
-                                    <div class="zhzl-vs-right" :class="makeColorClass(type, true)" :style="makeWidthStyle(type, true)">
-                                    </div>
-                                </div>
-                            </div>
+        						<div class="each-resone l-relative">
+        							<div class="zhzl-vs-left" :class="leftColorClass[type]" :style="leftWidthStyle[type]">
+        							</div>
+        						</div>
+        						<div class="each-resone l-relative">
+        							<div class="zhzl-vs-right" :class="rightColorClass[type]" :style="rightWidthStyle[type]">
+        							</div>
+        						</div>
+        					</div>
                         </div>
                         <div class="zhzl-right">
                             {{statistics.home.zj[type]}}
@@ -103,6 +103,42 @@ export default {
         },
         noEmptyFlag() {
             return this.noEmpty(this.statistics)
+        },
+        leftColorClass() {
+            let colorObj = {}
+            for (var type in this.StatisticsType_LQ) {
+                if (this.StatisticsType_LQ.hasOwnProperty(type)) {
+                    colorObj[type] = this.makeColorClass(type)
+                }
+            }
+            return colorObj
+        },
+        rightColorClass() {
+            let colorObj = {}
+            for (var type in this.StatisticsType_LQ) {
+                if (this.StatisticsType_LQ.hasOwnProperty(type)) {
+                    colorObj[type] = this.makeColorClass(type, true)
+                }
+            }
+            return colorObj
+        },
+        leftWidthStyle() {
+            let widthObj = {}
+            for (var type in this.StatisticsType_LQ) {
+                if (this.StatisticsType_LQ.hasOwnProperty(type)) {
+                    widthObj[type] = this.makeWidthStyle(type)
+                }
+            }
+            return widthObj
+        },
+        rightWidthStyle() {
+            let widthObj = {}
+            for (var type in this.StatisticsType_LQ) {
+                if (this.StatisticsType_LQ.hasOwnProperty(type)) {
+                    widthObj[type] = this.makeWidthStyle(type, true)
+                }
+            }
+            return widthObj
         }
     },
     methods: {

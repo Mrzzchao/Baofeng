@@ -6,7 +6,7 @@
         <div class="shikuang-box">
             <ul class="shikuang-line">
                 <li class="d-zt-box"><span class="d-zt">结束</span></li>
-                <li :class="makeEventTypeClass(event)"  v-for="(event, idx) in events">
+                <li :class="eventTypeClass[idx]"  v-for="(event, idx) in events">
                     <span class="sk-time">{{event.timing_point}}'</span>
                     <div v-if="event.eventtype === EventType.HUAN_REN.id">
                         <span class="shikuang-ball"><i class="jiaohuan"></i></span>
@@ -58,6 +58,11 @@ export default {
             })
 
             return obj
+        },
+        eventTypeClass() {
+            return this.events.map((event) => {
+                return this.makeEventTypeClass(event)
+            })
         },
         noEmptyFlag() {
             return this.noEmpty(this.events)

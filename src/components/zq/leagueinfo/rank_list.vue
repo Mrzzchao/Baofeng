@@ -25,7 +25,7 @@
                                 </tr>
                                 <tr v-for="(list, idx) in data.values">
                                     <td>
-                                        <em class="cate-cont"><i class="game-category" :style="styleSelect(list)">{{idx+1}}</i></em>
+                                        <em class="cate-cont"><i class="game-category" :style="styleArr[idx]">{{idx+1}}</i></em>
                                         <em class="gamer-cont"><img :src="list.teamlogo">{{list.teamsxname}}</em>
                                     </td>
                                     <td>{{list.total}}</td>
@@ -65,7 +65,7 @@
                                 </tr>
                                 <tr v-for="(list, idx) in data.values[key]">
                                     <td>
-                                        <em class="cate-cont"><i class="game-category" :style="styleSelect(list)">{{idx+1}}</i></em>
+                                        <em class="cate-cont"><i class="game-category" :style="styleArr[idx]">{{idx+1}}</i></em>
                                         <em class="gamer-cont"><img :src="list.teamlogo">{{list.teamsxname}}</em>
                                     </td>
                                     <td>{{list.total}}</td>
@@ -97,6 +97,11 @@ export default {
         },
         noEmptyFlag () {
             return this.noEmpty(this.data.values)
+        },
+        styleArr() {
+            return this.data.values.map((rank) => {
+                return this.styleSelect(rank)
+            })
         }
     },
     props: {
@@ -106,9 +111,9 @@ export default {
         }
     },
     methods: {
-        styleSelect (list) {
+        styleSelect (rank) {
             let item = this.data.desc.filter((item) => {
-                return item.type === list.type
+                return item.type === rank.type
             })[0]
 
             if (item) {
