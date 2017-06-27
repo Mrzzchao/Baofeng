@@ -1,5 +1,5 @@
 <template>
-    <div class="main member l-flex-1 l-relative">
+    <div class="main member l-flex-1 l-relative count-main">
         <div class="l-full  l-scroll-y">
             <div v-if="noEmptyFlag">
                 <div v-for="(name, type) in memberType">

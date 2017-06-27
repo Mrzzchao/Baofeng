@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const Football = () => import('~pages/Football.vue')
-const FootballMatchInfo = () => import('~pages/Football/MatchInfo.vue')
-const FootballLeagueInfo = () => import('~pages/Football/LeagueInfo.vue')
-const FootballLeagueInfoRank = () => import('~pages/Football/LeagueInfo/Rank.vue')
-const FootballLeagueInfoFx = () => import('~pages/Football/LeagueInfo/Statistics.vue')
+const Football = require('~pages/Football.vue')
+const FootballMatchInfo = require('~pages/Football/MatchInfo.vue')
+const FootballLeagueInfo = require('~pages/Football/LeagueInfo.vue')
+const FootballLeagueInfoRank = require('~pages/Football/LeagueInfo/Rank.vue')
+const FootballLeagueInfoFx = require('~pages/Football/LeagueInfo/Statistics.vue')
 
 
-const Basketball = () => import('~pages/Basketball.vue')
-const BasketballMatchInfo = () => import('~pages/Basketball/MatchInfo.vue')
-const BasketballLeagueInfo = () => import('~pages/Basketball/LeagueInfo.vue')
-const BasketballLeagueInfoRank = () => import('~pages/Basketball/LeagueInfo/Rank.vue')
-const BasketballLeagueInfoFx = () => import('~pages/Basketball/LeagueInfo/Statistics.vue')
+const Basketball = require('~pages/Basketball.vue')
+const BasketballMatchInfo = require('~pages/Basketball/MatchInfo.vue')
+const BasketballLeagueInfo = require('~pages/Basketball/LeagueInfo.vue')
+const BasketballLeagueInfoRank = require('~pages/Basketball/LeagueInfo/Rank.vue')
+const BasketballLeagueInfoFx = require('~pages/Basketball/LeagueInfo/Statistics.vue')
 
 Vue.use(VueRouter)
 

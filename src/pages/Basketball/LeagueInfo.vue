@@ -1,6 +1,11 @@
 <template>
     <div class="wrapper l-full l-flex-column">
         <league-header :tabs='tabs'></league-header>
+        <div class="we l-flex-column">
+            <div class="">
+                数据由<span class="company">500彩票网</span>提供
+            </div>
+        </div>
         <router-view></router-view>
     </div>
 </template>

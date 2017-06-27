@@ -1,19 +1,11 @@
 <template>
     <div id="app">
-        <div class="we">
-            <div class="">
-                数据由<span class="company">500彩票网</span>提供
-            </div>
-        </div>
         <div>
             <router-view></router-view>
         </div>
     </div>
 </template>
 <style>
-.wrapper {
-    top: 1rem;
-}
 .we {
     position: relative;
     background: #fff;
@@ -21,7 +13,6 @@
     font-size: .4rem;
     line-height: 1rem;
     height: 1rem;
-    margin-bottom: .2rem;
 }
 .we .company {
     color: #5c788f;
@@ -32,5 +23,11 @@
     display: block;
     height: 0;
     visibility: hidden;
+}
+.bg-c1 {
+    background: #efefef;
+}
+.jh dd {
+    border-bottom: none;
 }
 </style>

@@ -41,7 +41,7 @@ module.exports = Object.assign({}, base, {
         // filename: '[name].js?[chunkhash:8]',
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/',
-        chunkFilename: '[name].[chunkhash:8].chunk.js'
+        chunkFilename: '[name].chunk.js'
         // chunkFilename: 'chunk.js'
     },
     module: {

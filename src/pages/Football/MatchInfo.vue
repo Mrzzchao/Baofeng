@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="we l-flex-column bg-c1">
+            <div class="">
+                数据由<span class="company">500彩票网</span>提供
+            </div>
+        </div>
         <schedule></schedule>
         <analysis></analysis>
         <refresh-box :dispatchName='aTypes.getAllData' :param='$route.params.fid'></refresh-box>

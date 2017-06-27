@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper l-full l-flex-column">
+    <div class="wrapper l-flex-column">
         <statistics-list :data='statistics' v-if="statistics"></statistics-list>
         <refresh-box :dispatchName='aTypes.getStatistics' :param='$store.state.leagueZq.params'></refresh-box>
     </div>
