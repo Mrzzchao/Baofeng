@@ -3,6 +3,8 @@
  */
 import axios from 'axios'
 
+const errorUrl = 'http://www.baidu.com'
+
 const options = {}
 if (process.env.NODE_ENV === 'production') {
     options.baseURL = 'http://ews.500.com'
@@ -16,12 +18,14 @@ const ajax = function (url, config) {
         if (response.status === 200) {
             return response.data
         } else {
+            window.location = errorUrl
             throw new Error(response.message)
         }
     }).then(resp => {
         if (resp.status === '100') {
             return resp.data
         } else {
+            window.location = errorUrl
             const error = new Error(resp.message)
             error.code = resp.status
             throw error
@@ -33,12 +37,14 @@ ajax.get = function (url, config) {
         if (response.status === 200) {
             return response.data
         } else {
+            window.location = errorUrl
             throw new Error(response.message)
         }
     }).then(resp => {
         if (resp.status === '100') {
             return resp.data
         } else {
+            window.location = errorUrl
             const error = new Error(resp.message)
             error.code = resp.status
             throw error
@@ -50,12 +56,14 @@ ajax.post = function (url, param, config) {
         if (response.status === 200) {
             return response.data
         } else {
+            window.location = errorUrl
             throw new Error(response.message)
         }
     }).then(resp => {
         if (resp.status === '100') {
             return resp.data
         } else {
+            window.location = errorUrl
             const error = new Error(resp.message)
             error.code = resp.status
             throw error

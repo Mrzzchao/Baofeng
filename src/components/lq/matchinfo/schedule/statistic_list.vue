@@ -6,6 +6,28 @@
             </div>
             <div class="zhedie">
                 <ul class="zhzl-list">
+                    <li class="responsive">
+                        <div class="zhzl-left">
+                            <div class="who-gamer-home l-flex-1">
+                                <img :src="baseinfo.awaylogo"><em>{{baseinfo.awaysxname}}</em>
+                            </div>
+                        </div>
+                        <div class="each-resone">
+                            <div class="zhzl-classify">
+                            </div>
+                            <div class="responsive">
+                                <div class="each-resone l-relative">
+                                </div>
+                                <div class="each-resone l-relative">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="zhzl-right">
+                            <div class="who-gamer-guest l-flex-1">
+                                <em>{{baseinfo.homesxname}}</em><img :src="baseinfo.homelogo">
+                            </div>
+                        </div>
+                    </li>
                     <li class="responsive" v-for="(name, type) in StatisticsType_LQ">
                         <div class="zhzl-left">
                             {{statistics.away.zj[type]}}

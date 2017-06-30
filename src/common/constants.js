@@ -51,17 +51,16 @@ export const EventType = {
 
 export const StatisticsType_LQ = {
     shoot: '投篮',
-    third: '三分',
-    penalty_kick: '罚球',
+    rebs: '总篮板',
     offensiverebound: '前篮板',
     defensiverebound: '后篮板',
-    rebs: '总篮板',
     assists: '助攻',
     steals: '抢断',
     block_shot: '盖帽',
     fehlpass: '失误',
-    foul: '犯规',
-    score: '得分'
+    third: '三分',
+    penalty_kick: '罚球',
+    foul: '犯规'
 }
 
 export const Statistics_LQ_TH = {

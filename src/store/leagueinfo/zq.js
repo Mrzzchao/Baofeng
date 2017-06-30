@@ -75,7 +75,7 @@ const mutationsInfo = mapMutations({
                 state.params[key] = params[key]
             }
         }
-    },
+    }
 }, ns)
 
 const actions = actionsInfo.actions
