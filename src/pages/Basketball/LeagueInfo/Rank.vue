@@ -1,6 +1,6 @@
 <template>
     <section class="count-main l-flex-1 l-relative" v-if="rank">
-        <div class="inte-main l-full l-scroll-y" v-if="noEmptyFlag">
+        <div class="inte-main" v-if="noEmptyFlag">
             <rank-list-n :data="rank.values" v-if="isNBA"></rank-list-n>
             <div class="games-list rank-tb" v-else>
                 <rank-list :data="rank.values"></rank-list>

@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper l-full l-flex-column">
+    <div class="wrapper">
         <!-- <league-header :tabs='tabs'></league-header> -->
         <div class="we l-flex-column">
             <div class="">
