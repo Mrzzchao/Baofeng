@@ -25,8 +25,8 @@
                                             <p>{{member.teamsxname}}</p>
                                         </td>
                                         <td align="right">
-                                            <strong>{{member.goals}}</strong>
-                                            <p>{{member.avg_goals}}球/场</p>
+                                            <strong>{{member[resultType[type]]}}</strong>
+                                            <p>{{member['avg_' + resultType[type]]}}球/场</p>
                                         </td>
                                     </tr>
                                     <prompt v-else type="no-data" tip0="暂无数据"/>
@@ -53,6 +53,10 @@ export default {
             memberType: {
                 scores: '射手榜',
                 assists: '助攻榜'
+            },
+            resultType: {
+                scores: 'goals',
+                assists: 'assists'
             }
         }
     },

@@ -3,7 +3,7 @@
  */
 import axios from 'axios'
 
-const errorUrl = 'http://www.baidu.com'
+const errorUrl = 'http://m.sports.baofeng.com/v2.0/data/ball/match/nodata'
 
 const options = {}
 if (process.env.NODE_ENV === 'production') {

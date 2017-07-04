@@ -1,6 +1,6 @@
 <template>
-    <section class="l-flex-1 l-relative">
-        <div class=" l-full l-scroll-y">
+    <section class="">
+        <div class="">
             <div v-if="noEmptyFlag">
                 <div class="inte-main" v-if="data.rettype=='array'">
                     <!--没有分组-->
