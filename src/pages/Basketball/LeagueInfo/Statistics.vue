@@ -1,6 +1,6 @@
 <template>
-<section class="count-main l-flex-1 l-relative">
-    <div class="l-flex-row" v-if="noEmptyFlag">
+<section class="count-main">
+    <div class="l-flex-row l-full" v-if="noEmptyFlag" style="top: 1rem;">
         <div class="plleft l-flex-column">
             <ul class="plleft-list l-scroll-y l-flex-1">
                 <li :class="{'cur': type === key}" v-for="(name, type) in statisticsType" v-tap='{methods: updateData, type: type}'>{{name}}</li>
@@ -77,4 +77,7 @@ export default {
 </script>
 
 <style lang="css">
+    ul.average-list .l-flex-1 .l-scroll-y {
+        overflow: auto;
+    }
 </style>

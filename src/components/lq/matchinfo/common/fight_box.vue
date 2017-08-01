@@ -30,7 +30,7 @@
                     </th>
                     <th>{{tabs[key-1]}}</th>
                 </tr>
-			<tr v-for="(match, idx) in matchesFmt">
+			<tr v-for="(match, idx) in matches">
 				<td>
 					<span class="color9">{{match.simpleleague}}</span><span class="colorc f20">{{match.date.slice(2, 10)}}</span>
 					<em class="bkb-icon" v-if="bkbStatus[idx]"></em>
@@ -58,10 +58,10 @@
 			</tr>
 		</tbody>
 		</table>
-		<div class="box-arrow noborder" v-if="!isJz" v-tap="{methods: collap, lenght: matches.length}">
+		<!-- <div class="box-arrow noborder" v-if="!isJz" v-tap="{methods: collap, lenght: matches.length}">
 			<div class="zd-arrow" :class="{'rotate180': moreFlag}">
 			</div>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -105,9 +105,9 @@ export default {
         matches () {
             return this.matchesObj.matches
         },
-		matchesFmt () {
-			return this.matches.slice(0, this.cutLen)
-		},
+		// matchesFmt () {
+		// 	return this.matches.slice(0, this.cutLen)
+		// },
         bkbStatus () {
             return this.matches && this.matches.map((item, idx, arr) => {
                 if (idx === arr.length - 1) return false
