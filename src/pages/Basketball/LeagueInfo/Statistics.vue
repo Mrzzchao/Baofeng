@@ -1,6 +1,6 @@
 <template>
 <section class="count-main l-flex-1 l-relative">
-    <div class="l-flex-row l-full" v-if="noEmptyFlag">
+    <div class="l-flex-row" v-if="noEmptyFlag">
         <div class="plleft l-flex-column">
             <ul class="plleft-list l-scroll-y l-flex-1">
                 <li :class="{'cur': type === key}" v-for="(name, type) in statisticsType" v-tap='{methods: updateData, type: type}'>{{name}}</li>
@@ -19,7 +19,7 @@
             </ul>
         </div>
     </div>
-    <prompt v-else type="no-data" tip0="暂无数据"/>
+    <prompt v-else type="no-data" tip0="暂无数据" style="min-height: 10rem;width: 100%;background-color: #f4f4f4"/>
     <refresh-box :dispatchName='aTypes.getStatistics_Refresh' :param='{sid: $route.params.sid, key: key}'></refresh-box>
 </section>
 </template>

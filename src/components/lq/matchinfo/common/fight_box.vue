@@ -30,7 +30,7 @@
                     </th>
                     <th>{{tabs[key-1]}}</th>
                 </tr>
-			<tr v-for="(match, idx) in matches">
+			<tr v-for="(match, idx) in matchesFmt">
 				<td>
 					<span class="color9">{{match.simpleleague}}</span><span class="colorc f20">{{match.date.slice(2, 10)}}</span>
 					<em class="bkb-icon" v-if="bkbStatus[idx]"></em>
@@ -50,7 +50,7 @@
 						<span class="color9" v-if="match.homestanding > 0">[{{match.homestanding}}]</span>
 					</div>
 				</td>
-				<td @click='switchResult()'>
+				<td v-tap='{methods: switchResult}'>
 					<div :class="resultClass[idx]">
 						{{match | resultFmt(key)}}
 					</div>
@@ -58,11 +58,29 @@
 			</tr>
 		</tbody>
 		</table>
+		<div class="box-arrow noborder" v-if="!isJz" v-tap="{methods: collap, lenght: matches.length}">
+			<div class="zd-arrow" :class="{'rotate180': moreFlag}">
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 export default {
+	props: {
+		matchesObj: {
+			type: Object,
+			required: true
+		},
+		isJz: {
+			type: Boolean,
+			default: false
+		},
+		hoa: {
+			type: String,
+			default: 'homesxname'
+		}
+	},
     data () {
         return {
             key: 1,
@@ -75,7 +93,9 @@ export default {
                 'win',
                 'tie',
                 'lose'
-            ]
+            ],
+			moreFlag: false,
+			cutLen: 6
         }
     },
     computed: {
@@ -85,28 +105,35 @@ export default {
         matches () {
             return this.matchesObj.matches
         },
-		bkbStatus() {
-			return this.matches && this.matches.map((item, idx, arr) => {
-				let flag = item.isb2b === '1'
-				if(flag) arr[idx + 1].isb2b = '0'
-				return flag
-			})
+		matchesFmt () {
+			return this.matches.slice(0, this.cutLen)
 		},
-		homeTeamClass() {
-			return this.matches && this.matches.map((item) => {
-				return this.makeTeamClass(item, item.homesxname)
-			})
-		},
-		awayTeamClass() {
-			return this.matches && this.matches.map((item) => {
-				return this.makeTeamClass(item, item.awaysxname)
-			})
-		},
-		resultClass() {
-			return this.matches.map((match) => {
-				return this.makeResultClass(match)
-			})
-		}
+        bkbStatus () {
+            return this.matches && this.matches.map((item, idx, arr) => {
+                if (idx === arr.length - 1) return false
+                let dt1 = new Date(item.date)
+                dt1.setDate(dt1.getDate()) // 处理为相同日期
+
+                let dt2 = new Date(arr[idx + 1].date)
+                dt2.setDate(dt2.getDate() + 1) // 处理为相同日期
+                return +dt1 === +dt2
+            })
+        },
+        homeTeamClass () {
+            return this.matches && this.matches.map((item) => {
+                return this.makeTeamClass(item, item.homesxname)
+            })
+        },
+        awayTeamClass () {
+            return this.matches && this.matches.map((item) => {
+                return this.makeTeamClass(item, item.awaysxname)
+            })
+        },
+        resultClass () {
+            return this.matches.map((match) => {
+                return this.makeResultClass(match)
+            })
+        }
 
     },
     methods: {
@@ -134,26 +161,16 @@ export default {
             let result = match.result1
             let key = 0
             switch (result) {
-	            case '胜': key = 0; break
-	            case '平': key = 1; break
-	            case '负': key = 2; break
+            case '胜': key = 0; break
+            case '平': key = 1; break
+            case '负': key = 2; break
             }
             return name === this.baseinfo[this.hoa] ? this.teamClassMap[key] : ''
-        }
-    },
-    props: {
-        matchesObj: {
-            type: Object,
-            required: true
         },
-		isJz: {
-			type: Boolean,
-			default: false
+		collap ({length}) {
+			this.moreFlag = !this.moreFlag
+			this.cutLen = this.moreFlag ? length : 5
 		},
-		hoa: {
-			type: String,
-			default: 'homesxname'
-		}
     },
     filters: {
         avgResultFmt (input) {
@@ -161,15 +178,15 @@ export default {
         },
         resultFmt (input, key) {
             let result = input['result' + key]
-			let preStr = ''
+            let preStr = ''
             if (result === '') return '-'
 
-			switch (key) {
-				case 1: preStr = `[${input.sub}]`; break;
-				case 2: preStr = (input.result2 === '赢') ? ('+' + input.rangfen) : ('-' + input.rangfen); break;
-				case 3: preStr = input.zongfen; break;
-			}
-            return preStr + result
+            switch (key) {
+            case 1: preStr = `[${input.sub}]`; break
+            case 2: preStr = input.rangfen; break
+            case 3: preStr = input.zongfen; break
+            }
+            return preStr + ' ' + result
         }
     }
 }

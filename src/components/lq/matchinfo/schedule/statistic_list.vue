@@ -58,7 +58,7 @@
             <div class="gl-nav">
                 {{baseinfo[hoa + 'sxname']}}统计
             </div>
-            <div class="jie-detail" v-for="(name, tab) in tabs">
+            <!-- <div class="jie-detail" v-for="(name, tab) in tabs">
                 <div class="jie-detailL">
                     <div class="t-nav bgnav">
                         {{name}}球员
@@ -97,6 +97,36 @@
                         </ul>
                     </div>
                 </div>
+            </div> -->
+            <div class="gl-box fx-zr-box">
+            	<div class="dataBox">
+            		<div class="zr-detail">
+            			<ul class="zr-detail-left">
+                            <template v-for="(name, tab) in tabs">
+                                <li class="zr-detail-tit">{{name}}球员</li>
+                                <li v-for="member in statistics[hoa][tab]">{{member.player}}</li>
+                            </template>
+
+            			</ul>
+            			<div class="scroll-cont">
+            				<ul class="zr-detail-right table-tj">
+                                <template v-for="(name, tab) in tabs">
+                                    <li class="zr-detailer zr-detail-tit">
+                                        <ul>
+                                            <li v-for="(th, type) in Statistics_LQ_TH">{{th}}</li>
+                                        </ul>
+                                    </li>
+                                    <li class="zr-detailer" v-for="member in statistics[hoa][tab]">
+                                        <ul>
+                                            <li v-for="(th, type) in Statistics_LQ_TH">{{member[type]}}</li>
+                                        </ul>
+                                    </li>
+                                </template>
+
+            				</ul>
+            			</div>
+            		</div>
+            	</div>
             </div>
         </div>
     </div>

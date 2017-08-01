@@ -6,7 +6,7 @@
 </template>-->
 
 <template>
-    <div class="l-full l-box-center">
+    <div class="l-full l-box-center no-data-box">
         <div class="txtcenter">
             <img :src="imageUrl"  :class="{w136: type == 'loading', w240: type != 'loading'}"/>
             <div class="ui-empty-dfont">{{tip0}}</div>
@@ -117,4 +117,9 @@ export default {
         width: 4.666667rem;
         margin-top: .8rem;
     }
+    .no-data-box {
+        position: relative;
+        overflow: visible;
+    }
+
 </style>

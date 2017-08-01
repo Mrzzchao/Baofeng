@@ -34,7 +34,7 @@
 				{{tabs[key-1]}}
 			</th>
 		</tr>
-		<tr v-for="(match, idx) in matches">
+		<tr v-for="(match, idx) in matchesFmt">
 			<td>
 				<span class="color9">{{match.simplegbname}}</span><span class="colorc f20">{{match.matchdate.slice(2, 10)}}</span>
 			</td>
@@ -61,11 +61,29 @@
 		</tr>
 		</tbody>
 		</table>
+		<div class="box-arrow noborder" v-if="!isJz" v-tap="{methods: collap, lenght: matches.length}">
+			<div class="zd-arrow" :class="{'rotate180': moreFlag}">
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 export default {
+	props: {
+		matchesObj: {
+			type: Object,
+			required: true
+		},
+		isJz: {
+			type: Boolean,
+			default: false
+		},
+		hoa: {
+			type: String,
+			default: 'homesxname'
+		}
+	},
     data () {
         return {
             key: 1,
@@ -78,7 +96,9 @@ export default {
                 'win',
                 'tie',
                 'lose'
-            ]
+            ],
+			moreFlag: false,
+			cutLen: 6
         }
     },
     computed: {
@@ -86,8 +106,11 @@ export default {
             return this.$store.state.matchZq.baseinfo
         },
         matches () {
-            return this.matchesObj.matches.slice(0, 6)
+            return this.matchesObj.matches
         },
+		matchesFmt () {
+			return this.matches.slice(0, this.cutLen)
+		},
 		homeTeamClass() {
 			return this.matches && this.matches.map((item) => {
 				return this.makeTeamClass(item, item.homesxname)
@@ -134,21 +157,11 @@ export default {
             case '负': key = 2; break
             }
             return name === this.baseinfo[this.hoa] ? this.teamClassMap[key] : ''
-        }
-    },
-    props: {
-        matchesObj: {
-            type: Object,
-            required: true
         },
-		isJz: {
-			type: Boolean,
-			default: false
+		collap ({length}) {
+			this.moreFlag = !this.moreFlag
+			this.cutLen = this.moreFlag ? length : 5
 		},
-		hoa: {
-			type: String,
-			default: 'homesxname'
-		}
     },
     filters: {
         avgResultFmt (input) {

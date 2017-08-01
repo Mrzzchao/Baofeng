@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="baseinfo">
         <div class="we l-flex-column">
             <div class="">
                 数据由<span class="company">500彩票网</span>提供
@@ -26,6 +26,11 @@ export default {
     data() {
         return {
             aTypes
+        }
+    },
+    computed: {
+        baseinfo() {
+            return this.$store.state.matchLq.baseinfo
         }
     },
     mounted () {
