@@ -11,7 +11,9 @@
         <tr>
             <th class="tb-lp">
                 <em class="where-mat" v-if="strOfNBA">{{strOfNBA}}</em>
+                <em class="where-mat" v-else>排名队伍</em>
             </th>
+
             <th>
                 胜/负
             </th>
