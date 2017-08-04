@@ -8,7 +8,7 @@ export const EventType = {
         id: '2'
     },
     DIAN_QIU: {
-        className: 'dianqiu',
+        className: 'dian-ball',
         id: '3'
     },
     YELLOW_CARD: {

@@ -16,7 +16,7 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th></th>
+                                    <th>排名队伍</th>
                                     <th>赛</th>
                                     <th>胜/平/负</th>
                                     <th>进/失</th>
