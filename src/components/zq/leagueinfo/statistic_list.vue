@@ -17,7 +17,7 @@
                                 <tbody>
                                     <tr v-for="member in data[type]" v-if="noEmpty(data[type])">
                                         <td align="left">
-                                            <img :src="member.avatar" class="member-face">
+                                            <img v-img-load='member.avatar' class="member-face">
                                         </td>
                                         <td align="left">
                                             <strong>{{member.playername}}</strong>
@@ -43,10 +43,19 @@
 
 <script>
 import Prompt from '~components/common/prompt.vue'
-
+import imgLoad from '~directives/imgLoad'
 export default {
     components: {
         Prompt
+    },
+    directives: {
+        imgLoad
+    },
+    props: {
+        data: {
+            type: Object,
+            required: true
+        }
     },
     data() {
         return {
@@ -69,12 +78,6 @@ export default {
         noEmpty (obj) {
             if (obj) { return !!Object.keys(obj).length }
             return false
-        }
-    },
-    props: {
-        data: {
-            type: Object,
-            required: true
         }
     }
 }
