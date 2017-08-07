@@ -16,7 +16,10 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>排名队伍</th>
+                                    <th>
+                                        <em class="cate-cont">排名</em>
+                                        <em class="cate-cont">队伍</em>
+                                    </th>
                                     <th>赛</th>
                                     <th>胜/平/负</th>
                                     <th>进/失</th>

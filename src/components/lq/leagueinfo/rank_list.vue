@@ -11,7 +11,10 @@
         <tr>
             <th class="tb-lp">
                 <em class="where-mat" v-if="strOfNBA">{{strOfNBA}}</em>
-                <em class="where-mat" v-else>排名队伍</em>
+                <template v-else>
+                    <em class="cate-cont" style="text-align: left;">排名</em>
+                    <em class="cate-cont" style="text-align: left;">队伍</em>
+                </template>
             </th>
 
             <th>
