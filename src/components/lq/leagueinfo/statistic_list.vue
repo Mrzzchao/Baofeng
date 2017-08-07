@@ -7,7 +7,7 @@
                         <div class="box-tit">
                             <h2> {{name}} </h2>
                         </div>
-                        <div class="member-list">
+                        <div class="member-list"  v-if="noEmpty(data[type])">
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <colgroup>
                                     <col width="10%">
@@ -15,7 +15,7 @@
                                     <col width="18%">
                                 </colgroup>
                                 <tbody>
-                                    <tr v-for="member in data[type]" v-if="noEmpty(data[type])">
+                                    <tr v-for="member in data[type]">
                                         <td align="left">
                                             <img :src="member.avatar" class="member-face">
                                         </td>
@@ -29,10 +29,10 @@
                                             <p>{{member.avg_goals}}球/场</p>
                                         </td>
                                     </tr>
-                                    <prompt v-else type="no-data" tip0="暂无数据"/>
                                 </tbody>
                             </table>
                         </div>
+                        <div class="member-list member-empty" v-else>暂无数据</div>
                     </div>
                 </div>
             </div>
