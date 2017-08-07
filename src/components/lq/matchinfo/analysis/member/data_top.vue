@@ -1,9 +1,9 @@
 <template>
-    <div class="tContent" style="display:block">
+    <div class="tContent" style="display:block" v-if="noEmptyFlag">
     	<div class="zj-nav">
     		球员-数据王
     	</div>
-    	<div class="gl-box fx-zr-box"  v-if="noEmptyFlag">
+    	<div class="gl-box fx-zr-box">
             <template  v-for="(name, type) in Best3Type">
                 <div class="qy-databox"  v-tap="{methods: () => Best3TypeStatus[type] = !Best3TypeStatus[type]}">
                     <ul class="dataItem">
@@ -56,11 +56,6 @@
                 </div>
             </template>
     	</div>
-        <div class="feed-back" v-else>
-            <div class="feed-box">
-                <em>暂无数据</em>
-            </div>
-        </div>
     </div>
 </template>
 
