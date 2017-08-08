@@ -6,7 +6,10 @@
                 <span class="f30 fl"><i class="win tcell">{{matchesObj.win_count}}胜</i><i class="lose tcell">{{matchesObj.lost_count}}负</i></span>
                 <span class="f30 color3 fl">胜率{{matchesObj.winrate}}%</span>
 			</div>
-			<div class="total-tips">
+			<div class="total-tips" v-if="isJz">
+				{{matchesObj | allResultFmt}}
+			</div>
+			<div class="total-tips" v-else>
                 {{matchesObj | avgResultFmt}}
 			</div>
 		</div>
@@ -176,6 +179,9 @@ export default {
         avgResultFmt (input) {
             return `场均得分${input.avar_get}分，场均失${input.avar_lost}分， 大分${input.big_ball}次，小分${input.small_ball}次`
         },
+		allResultFmt(input) {
+			return `场均分差${input.avar_sub}分，场均总分${input.avar_all}， 大分${input.big_ball}次，小分${input.small_ball}次`
+		},
         resultFmt (input, key) {
             let result = input['result' + key]
             let preStr = ''
