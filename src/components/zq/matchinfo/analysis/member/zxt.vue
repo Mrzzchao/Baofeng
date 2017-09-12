@@ -1,7 +1,7 @@
 <template>
     <div class="zhedie-box" v-if="noEmptyFlag">
     	<div class="zj-nav">
-    		本场首发
+    		{{formation.ispre == -1 ?'上场首发' : '本场首发'}}
     	</div>
     	<div class="zhedie">
     		<div class="zuqiuc">
