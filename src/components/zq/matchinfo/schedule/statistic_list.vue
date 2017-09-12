@@ -1,5 +1,5 @@
 <template>
-    <div v-if="statistics">
+    <div v-if="noEmptyFlag">
 	<div class="sk-nav">
 		统计
 	</div>
@@ -107,6 +107,9 @@ export default {
                 }
             }
             return widthObj
+        },
+        noEmptyFlag () {
+            return this.noEmpty(this.statistics)
         }
     },
     methods: {
@@ -124,6 +127,10 @@ export default {
             let away = +(this.statistics['a_' + key])
             if (isReverse) { return home < away ? class_l : class_s }
             return home > away ? class_l : class_s
+        },
+        noEmpty (obj) {
+            if (obj) { return !!Object.keys(obj).length }
+            return false
         }
     }
 }
